@@ -60,7 +60,6 @@ const Myc2e = () => {
               </div>
             </div>
           </div>
-
           <div className="col-12 remove-course-alert"></div>
         </div>
       </div>
