@@ -218,7 +218,7 @@ a {
 }
 .main-wrapper .container-fluid .my-c2e-card {
   position: relative;
-
+  background-image: url(./assets/images/course-main-img.png);
   border-radius: 12px;
   width: 48%;
   height: 96px;
@@ -400,7 +400,7 @@ body input:-webkit-autofill {
 }
 .username-field:after {
   content: "";
-  background-image: url(../img/icons/email1.svg);
+  background-image: url(./assets/images/icons/email1.svg);
   position: absolute;
   left: 12px;
   top: 16px;
@@ -411,7 +411,7 @@ body input:-webkit-autofill {
 }
 .password-field:after {
   content: "";
-  background-image: url(../img/icons/password-lock.svg);
+  background-image: url(./assets/images/icons/password-lock.svg);
   position: absolute;
   left: 12px;
   top: 16px;
@@ -422,7 +422,7 @@ body input:-webkit-autofill {
 }
 /* .password-field:after {
   content: "";
-  background-image: url(../img/icons/show-password.svg);
+  background-image: url(./assets/images/icons/show-password.svg);
   position: absolute;
   right: 13px;
   top: 14px;
@@ -522,7 +522,7 @@ a {
   width: 100%;
   display: block;
   background-size: contain;
-  background-image: url(../img/backgroud-img.png) !important;
+  background-image: url(./assets/images/backgroud-img.png) !important;
   padding: 23px 25px 28px 23px;
   background-position: 95%;
   background-repeat: no-repeat;
@@ -777,7 +777,7 @@ a {
   color: #2e68bf;
 }
 #main #faq .card .card-header .btn-header-link:after {
-  background-image: url(../img/top-vector.svg);
+  background-image: url(./assets/images/top-vector.svg);
   float: right;
   content: "";
   width: 13px;
@@ -788,7 +788,7 @@ a {
   top: 11px;
 }
 #main #faq .card .card-header .btn-header-link.collapsed:after {
-  background-image: url("../img/bottom-vector.svg");
+  background-image: url("./assets/images/bottom-vector.svg");
   content: "";
 }
 .accordion .card .card-body ul {

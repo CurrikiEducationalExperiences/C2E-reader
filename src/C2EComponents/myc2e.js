@@ -1,79 +1,80 @@
 import React from "react";
-import search1 from "../assets/images/search1.png";
+import search1 from "../assets/images/icons/search1.png";
+import menu from "../assets/images/icons/menu1.svg";
+import plusicon from "../assets/images/icons/plus-icon.png";
+import menuicon from "../assets/images/icons/home-menu-icon.svg";
+import searchmenu from "../assets/images/icons/search-menu-icon.svg";
+import ellipsisicon from "../assets/images/icons/ellipse-icon.svg";
 const Myc2e = () => {
   return (
-    <div class="main-wrapper">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="header-menu">
-              <img src="./img/icons/menu1.svg" width="24" height="24" />
+    <div className="main-wrapper">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            <div className="header-menu">
+              <img src={menu} width="24" height="24" />
             </div>
           </div>
-          <div class="main-wrap">
-            <div class="main-title mb-4">
+          <div className="main-wrap">
+            <div className="main-title mb-4">
               <h4>Hello,</h4>
-              <h4 style="font-weight: bold !important">Jane Cooper</h4>
+              <h4>Jane Cooper</h4>
             </div>
-            <div class="project-search">
+            <div className="project-search">
               <input name="search" placeholder="Search your c2e..." />
               <button>
                 <img src={search1} width="24" height="24" />
               </button>
             </div>
-            <div class="my-c2e-heading mb-1">
+            <div className="my-c2e-heading mb-1">
               <h3>My C2E's</h3>
             </div>
-            <div class="c2e-filters">
-              <button class="filter-btn active-filter-btn">All</button>
-              <button class="filter-btn">Due date</button>
-              <button class="filter-btn">Completed</button>
+            <div className="c2e-filters">
+              <button className="filter-btn active-filter-btn">All</button>
+              <button className="filter-btn">Due date</button>
+              <button className="filter-btn">Completed</button>
             </div>
 
             {/* <!-- <div
-              class="download-projects-list"
+              className="download-projects-list"
               id="offlineMyc2eContainer"
             ></div> --> */}
 
-            <div class="my-c2e-cards-wrapper" id="offlineMyc2eContainer">
-              <div class="add-c2e-card">
-                <div class="c2e-card-content" id="add-C2E">
-                  <img src="./img/icons/plus-icon.png" width="20" height="20" />
-                  <p class="mt-1 add-c2e-text">
+            <div className="my-c2e-cards-wrapper" id="offlineMyc2eContainer">
+              <div className="add-c2e-card">
+                <div className="c2e-card-content" id="add-C2E">
+                  <img src={plusicon} width="20" height="20" />
+                  <p className="mt-1 add-c2e-text">
                     <a href="addC2E.html">Add C2E</a>
                   </p>
                 </div>
               </div>
-              {/* <!-- <div class="my-c2e-card">
-              <div class="ellipses-dropdown">
-                <img
-                  src="./img/icons/ellipse-icon.svg"
-                  width="16px"
-                  height="16px"
-                />
+              <div className="my-c2e-card">
+                <div className="ellipses-dropdown">
+                  <img src={ellipsisicon} width="16px" height="16px" />
+                </div>
+                <div className="c2e-card-content">
+                  <span className="project-heading">C2E #1</span>
+                  <span>13 Jan 2023</span>
+                </div>
               </div>
-              <div class="c2e-card-content">
-                <span class="project-heading">C2E #1</span>
-                <span>13 Jan 2023</span>
-              </div>
-            </div> --> */}
             </div>
           </div>
 
-          <div class="col-12 remove-course-alert"></div>
+          <div className="col-12 remove-course-alert"></div>
         </div>
       </div>
-      <div class="c23-bottom-menu">
-        <div class="menu-list">
+      <div className="c23-bottom-menu">
+        <div className="menu-list">
           <ul>
-            <li class="active-list">
+            <li className="active-list">
               <a href="#">
-                <img src="./img/icons/home-menu-icon.svg" width="24" height="24" />
+                <img src={menuicon} width="24" height="24" />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src="./img/icons/search-menu-icon.svg" width="24" height="24" />
+                <img src={searchmenu} width="24" height="24" />
               </a>
             </li>
           </ul>
