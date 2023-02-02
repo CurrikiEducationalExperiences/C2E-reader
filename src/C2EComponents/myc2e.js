@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import JSZip from "jszip";
 import search1 from "../assets/images/icons/search1.png";
 import menu from "../assets/images/icons/menu1.svg";
 import plusicon from "../assets/images/icons/plus-icon.png";
 import menuicon from "../assets/images/icons/home-menu-icon.svg";
 import searchmenu from "../assets/images/icons/search-menu-icon.svg";
 import ellipsisicon from "../assets/images/icons/ellipse-icon.svg";
+import { Link } from "react-router-dom";
 const Myc2e = () => {
+  const [contentData, setcontentData] = useState();
+  const [contentDetail, setcontentDetail] = useState(null);
+  const [projectJSON, setProjectJSON] = useState(null);
+  const [activityh5p, setActivityh5p] = useState(null);
+  console.log("projectJSON", projectJSON);
   return (
     <div className="main-wrapper">
       <div className="container-fluid">
@@ -45,19 +52,45 @@ const Myc2e = () => {
                 <div className="c2e-card-content" id="add-C2E">
                   <img src={plusicon} width="20" height="20" />
                   <p className="mt-1 add-c2e-text">
-                    <a href="addC2E.html">Add C2E</a>
+                    {/* <a href="addC2E.html">Add C2E</a> */}
+                    <input
+                      type="file"
+                      onChange={async (e) => {
+                        console.log("name", e.target.files);
+                        const loadzip = await JSZip.loadAsync(e.target.files[0]); // 1) read the Blob
+                        console.log(loadzip);
+                        const contents = [];
+                        const contentsDetail = [];
+                        loadzip.forEach((relativePath, zipEntry) => {
+                          contents.push(zipEntry.name);
+                        });
+                        setcontentData(contents);
+                        for (var i = 0; i < contents.length; i++) {
+                          const contentRead = await loadzip.files[contents[i]].async("text");
+                          contentsDetail.push(contentRead);
+                          if (contents[i].includes("project.json")) {
+                            setProjectJSON(JSON.parse(contentRead));
+                          }
+                        }
+                        setcontentDetail(contentsDetail);
+                      }}
+                    />
                   </p>
                 </div>
               </div>
-              <div className="my-c2e-card">
-                <div className="ellipses-dropdown">
-                  <img src={ellipsisicon} width="16px" height="16px" />
+              {projectJSON && (
+                <div className="my-c2e-card">
+                  <div className="ellipses-dropdown">
+                    <img src={ellipsisicon} width="16px" height="16px" />
+                  </div>
+                  <div className="c2e-card-content">
+                    <Link>
+                      <span className="project-heading">{projectJSON?.name}</span>
+                    </Link>
+                    <span>{projectJSON?.created_at}</span>
+                  </div>
                 </div>
-                <div className="c2e-card-content">
-                  <span className="project-heading">C2E #1</span>
-                  <span>13 Jan 2023</span>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
