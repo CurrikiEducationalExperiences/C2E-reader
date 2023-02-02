@@ -8,18 +8,21 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Accordion from "react-bootstrap/Accordion";
 
-const Myc2eOverview = ({ playlistsContent }) => {
+const Myc2eOverview = ({ playlistsContent, setActivityh5p, contentDetail, contentData }) => {
+  const returnIndex = (filename) => {
+    return contentData.indexOf(contentData.filter((data, counter) => data.includes(filename))?.[0]);
+  };
   return (
     <div className="main-wrapper">
       {playlistsContent?.length > 0 && (
         <>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-12">
+              {/* <div className="col-12">
                 <div className="header-menu mb-0" onclick="history.back()">
                   <img src={backicon} width="24" height="24" />
                 </div>
-              </div>
+              </div> */}
               <div className="main-wrap">
                 <div className="course-detail-wrap">
                   <div className="thumb-content">
@@ -92,7 +95,21 @@ const Myc2eOverview = ({ playlistsContent }) => {
                               <Accordion.Item eventKey={key}>
                                 <Accordion.Header>{playlist.title}</Accordion.Header>
                                 {playlist?.activities?.map((activity) => {
-                                  return <Accordion.Body>{activity.title}</Accordion.Body>;
+                                  return (
+                                    <Accordion.Body
+                                      onClick={() =>
+                                        setActivityh5p(
+                                          JSON.parse(
+                                            contentDetail[
+                                              returnIndex(`${activity.h5p_content_id}-h5p.json`)
+                                            ]
+                                          )
+                                        )
+                                      }
+                                    >
+                                      {activity.title}
+                                    </Accordion.Body>
+                                  );
                                 })}
                               </Accordion.Item>
                             );
