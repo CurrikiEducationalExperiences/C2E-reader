@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import JSZip from "jszip";
+import Myc2eOverview from "./myc2eoverview";
 import search1 from "../assets/images/icons/search1.png";
 import menu from "../assets/images/icons/menu1.svg";
 import plusicon from "../assets/images/icons/plus-icon.png";
@@ -11,6 +12,7 @@ const Myc2e = () => {
   const [contentData, setcontentData] = useState();
   const [contentDetail, setcontentDetail] = useState(null);
   const [projectJSON, setProjectJSON] = useState(null);
+  const [playlists, setplaylists] = useState(null);
   const [activityh5p, setActivityh5p] = useState(null);
   console.log("projectJSON", projectJSON);
   return (
@@ -84,7 +86,12 @@ const Myc2e = () => {
                     <img src={ellipsisicon} width="16px" height="16px" />
                   </div>
                   <div className="c2e-card-content">
-                    <Link>
+                    <Link
+                      // to="/myc2eoverview"
+                      onClick={() => {
+                        setplaylists(projectJSON?.playlists);
+                      }}
+                    >
                       <span className="project-heading">{projectJSON?.name}</span>
                     </Link>
                     <span>{projectJSON?.created_at}</span>
@@ -96,6 +103,7 @@ const Myc2e = () => {
           <div className="col-12 remove-course-alert"></div>
         </div>
       </div>
+      <Myc2eOverview playlistsContent={playlists} />
       <div className="c23-bottom-menu">
         <div className="menu-list">
           <ul>
