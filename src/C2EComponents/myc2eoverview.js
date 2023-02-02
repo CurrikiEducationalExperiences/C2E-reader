@@ -95,7 +95,7 @@ const Myc2eOverview = () => {
                         <Accordion.Body>Activity #1</Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="1">
-                        <Accordion.Header>Playlist #1</Accordion.Header>
+                        <Accordion.Header>Playlist #2</Accordion.Header>
                         <Accordion.Body>Activity #2</Accordion.Body>
                       </Accordion.Item>
                     </Accordion>

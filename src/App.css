@@ -681,7 +681,17 @@ a {
 .tab-content .nav-tabs li {
   width: 50%;
 }
-.tab-content .nav-tabs a.active {
+.tab-content .nav-tabs li button {
+  width: 100%;
+  margin: 0 8px 0 0;
+}
+/* .tab-content .nav-tabs li:last-child a {
+  margin-right: 0;
+} */
+.tab-content .nav-tabs li:last-child button {
+  margin-right: 0;
+}
+.tab-content .nav-tabs button.active {
   color: #fff;
   background: #2e68bf;
   border-radius: 16px;
@@ -690,21 +700,7 @@ a {
   border: 0;
   text-align: center;
 }
-.tab-content .tab-content #main .playlist-head {
-  color: #2e68bf;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  border-bottom: 2px solid #f8af2c;
-  width: 67px;
-}
-.tab-content .nav-tabs li:last-child a {
-  margin-right: 0;
-}
-.tab-content .nav-tabs a {
-  margin-right: 8px;
-}
-.tab-content .nav-tabs a {
+.tab-content .nav-tabs button {
   background: #f1f1f1;
   border-radius: 16px;
   padding: 8px 16px;
@@ -714,6 +710,39 @@ a {
   font-size: 14px;
   text-align: center;
 }
+/* .tab-content .nav-tabs a.active {
+  color: #fff;
+  background: #2e68bf;
+  border-radius: 16px;
+  padding: 8px 16px;
+  font-weight: 400;
+  border: 0;
+  text-align: center;
+} */
+.tab-content .tab-content #main .playlist-head {
+  color: #2e68bf;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  border-bottom: 2px solid #f8af2c;
+  width: 67px;
+}
+/* .tab-content .nav-tabs li:last-child a {
+  margin-right: 0;
+} */
+/* .tab-content .nav-tabs a {
+  margin-right: 8px;
+} */
+/* .tab-content .nav-tabs a {
+  background: #f1f1f1;
+  border-radius: 16px;
+  padding: 8px 16px;
+  color: #959595;
+  font-weight: 400;
+  border: 0;
+  font-size: 14px;
+  text-align: center;
+} */
 .tab-content .overview-description {
   margin-bottom: 9px;
 }
