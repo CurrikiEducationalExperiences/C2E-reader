@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import JSZip from "jszip";
 import Myc2eOverview from "./myc2eoverview";
+import H5PEditor from "../H5PComponents/H5PEditors";
 import search1 from "../assets/images/icons/search1.png";
 import menu from "../assets/images/icons/menu1.svg";
 import plusicon from "../assets/images/icons/plus-icon.png";
@@ -8,6 +9,7 @@ import menuicon from "../assets/images/icons/home-menu-icon.svg";
 import searchmenu from "../assets/images/icons/search-menu-icon.svg";
 import ellipsisicon from "../assets/images/icons/ellipse-icon.svg";
 import { Link } from "react-router-dom";
+
 const Myc2e = () => {
   const [contentData, setcontentData] = useState();
   const [contentDetail, setcontentDetail] = useState(null);
@@ -59,7 +61,9 @@ const Myc2e = () => {
                       type="file"
                       onChange={async (e) => {
                         console.log("name", e.target.files);
-                        const loadzip = await JSZip.loadAsync(e.target.files[0]); // 1) read the Blob
+                        const loadzip = await JSZip.loadAsync(
+                          e.target.files[0]
+                        ); // 1) read the Blob
                         console.log(loadzip);
                         const contents = [];
                         const contentsDetail = [];
@@ -68,7 +72,9 @@ const Myc2e = () => {
                         });
                         setcontentData(contents);
                         for (var i = 0; i < contents.length; i++) {
-                          const contentRead = await loadzip.files[contents[i]].async("text");
+                          const contentRead = await loadzip.files[
+                            contents[i]
+                          ].async("text");
                           contentsDetail.push(contentRead);
                           if (contents[i].includes("project.json")) {
                             setProjectJSON(JSON.parse(contentRead));
@@ -92,7 +98,9 @@ const Myc2e = () => {
                         setplaylists(projectJSON?.playlists);
                       }}
                     >
-                      <span className="project-heading">{projectJSON?.name}</span>
+                      <span className="project-heading">
+                        {projectJSON?.name}
+                      </span>
                     </Link>
                     <span>{projectJSON?.created_at}</span>
                   </div>
@@ -100,10 +108,17 @@ const Myc2e = () => {
               )}
             </div>
           </div>
+
           <div className="col-12 remove-course-alert"></div>
         </div>
       </div>
-      <Myc2eOverview playlistsContent={playlists} />
+      <Myc2eOverview
+        playlistsContent={playlists}
+        setActivityh5p={setActivityh5p}
+        contentDetail={contentDetail}
+        contentData={contentData}
+      />
+      <H5PEditor h5p={activityh5p} />
       <div className="c23-bottom-menu">
         <div className="menu-list">
           <ul>
