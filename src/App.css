@@ -59,6 +59,10 @@ body {
 a {
   text-decoration: none;
 }
+
+.reader-c2e{
+  margin-bottom: 400px;
+}
 .main-wrapper .top-space-fluid {
   height: 200px;
   background-color: #e6e6e6;
@@ -98,10 +102,10 @@ a {
   height: 26px;
 }
 .main-wrapper .container-fluid .my-c2e-cards-wrapper {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
   width: 100%;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 .main-wrapper .container-fluid .add-c2e-card {
   width: 48%;
@@ -121,6 +125,7 @@ a {
   box-shadow: 0px 8px 32px 4px rgb(8 72 146 / 16%);
   border-radius: 16px 16px 0px 0px;
   padding: 19px 32px;
+  z-index: 1111111;
 }
 .main-wrapper .c23-bottom-menu ul {
   display: flex;
@@ -220,12 +225,13 @@ a {
   position: relative;
   background-image: url(./assets/images/course-main-img.png);
   border-radius: 12px;
-  width: 48%;
-  height: 96px;
+  width: 250px;
+  height: 250px;
   margin-bottom: 12px;
   border: none;
   background-repeat: no-repeat;
   background-size: cover;
+  box-shadow: inset 0 0 0 1000px rgb(0 0 0 / 50%)
 }
 .main-wrapper .container-fluid .my-c2e-card .c2e-card-content .card-image {
   height: 140px;
@@ -656,6 +662,7 @@ a {
 }
 .thumb-content {
   margin-bottom: 14px;
+  text-align: center;
 }
 .thumb-content p {
   font-style: normal;
@@ -669,8 +676,8 @@ a {
   width: 100%;
   border: 1px solid #f1f1f1;
   border-radius: 5px;
-  width: 100%;
-  height: 200px;
+  width: auto;
+  /* height: 200px; */
 }
 .tab-content .nav-tabs {
   border: 0;

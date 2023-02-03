@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import JSZip from "jszip";
 import Myc2eOverview from "./myc2eoverview";
 import H5PEditor from "../H5PComponents/H5PEditors";
@@ -16,22 +16,23 @@ const Myc2e = () => {
   const [projectJSON, setProjectJSON] = useState(null);
   const [playlists, setplaylists] = useState(null);
   const [activityh5p, setActivityh5p] = useState(null);
+  const inp = useRef()
   console.log("projectJSON", projectJSON);
   return (
-    <div className="main-wrapper">
+    <div className="main-wrapper reader-c2e">
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-            <div className="header-menu">
+            {/* <div className="header-menu">
               <img src={menu} width="24" height="24" />
-            </div>
+            </div> */}
           </div>
           <div className="main-wrap">
             <div className="main-title mb-4">
-              <h4>Hello,</h4>
-              <h4>Jane Cooper</h4>
+              <h4>C2E Reader</h4>
+              {/* <h4>Jane Cooper</h4> */}
             </div>
-            <div className="project-search">
+            {/* <div className="project-search">
               <input name="search" placeholder="Search your c2e..." />
               <button>
                 <img src={search1} width="24" height="24" />
@@ -44,7 +45,7 @@ const Myc2e = () => {
               <button className="filter-btn active-filter-btn">All</button>
               <button className="filter-btn">Due date</button>
               <button className="filter-btn">Completed</button>
-            </div>
+            </div> */}
 
             {/* <!-- <div
               className="download-projects-list"
@@ -52,13 +53,15 @@ const Myc2e = () => {
             ></div> --> */}
 
             <div className="my-c2e-cards-wrapper" id="offlineMyc2eContainer">
-              <div className="add-c2e-card">
+              <div className="add-c2e-card" onClick={()=>inp.current.click()}>
                 <div className="c2e-card-content" id="add-C2E">
                   <img src={plusicon} width="20" height="20" />
                   <p className="mt-1 add-c2e-text">
                     {/* <a href="addC2E.html">Add C2E</a> */}
                     <input
+                    ref={inp}
                       type="file"
+                      style={{display:'none'}}
                       onChange={async (e) => {
                         console.log("name", e.target.files);
                         const loadzip = await JSZip.loadAsync(
