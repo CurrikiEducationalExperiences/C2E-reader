@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import backicon from "../assets/images//icons/back-icon.svg";
 import courselist from "../assets/images/course-list-img.png";
 import updateicon from "../assets/images/update-icon.svg";
@@ -12,13 +12,29 @@ const Myc2eOverview = ({
   playlistsContent,
   setActivityh5p,
   contentDetail,
-  contentData,
+  contents,
+  loadzipper,
 }) => {
+  const [totalActivities, settotalActivities] = useState([]);
   const returnIndex = (filename) => {
-    return contentData.indexOf(
-      contentData.filter((data, counter) => data.includes(filename))?.[0]
-    );
+    return contents.indexOf(contents.filter((data, counter) => data.includes(filename))?.[0]);
   };
+  useEffect(() => {
+    (async () => {
+      const contentsDetail = [];
+      for (var i = 0; i < contents.length; i++) {
+        const contentRead = await loadzipper.files[contents[i]].async("text");
+        // contentsDetail.push(contentRead);
+        if (contents[i].includes("/activities/c2e.json")) {
+          const c2edata = JSON.parse(contentRead);
+          c2edata?.c2eContain?.[1].c2eComponents?.map(async (resource) => {
+            settotalActivities((prevtotalActivities) => [...prevtotalActivities, resource]);
+          });
+        }
+      }
+    })();
+  }, [playlistsContent]);
+  console.log("contentDetail", contentDetail);
   return (
     <div className="main-wrapper">
       {playlistsContent?.length > 0 && (
@@ -42,11 +58,7 @@ const Myc2eOverview = ({
                       id="uncontrolled-tab-example"
                       classNameName="mb-3"
                     >
-                      <Tab
-                        className="nav-link"
-                        eventKey="Overview"
-                        title="Overview"
-                      >
+                      <Tab className="nav-link" eventKey="Overview" title="Overview">
                         <div className="tab-content" id="myTabContent">
                           <div
                             className="tab-pane fade show active"
@@ -57,14 +69,12 @@ const Myc2eOverview = ({
                             <div className="overview-description">
                               <h4>Description</h4>
                               <p id="course-description">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Bibendum est suspendisse tempor
-                                dui. Fringilla dis tincidunt morbi risus
-                                interdum urna, odio ac. Sit in venenatis gravida
-                                enim vitae, nibh blandit molestie. Et, nulla
-                                nisl laoreet vel tincidunt enim, venenatis.
-                                Viverra eget lobortis massa viverra at faucibus
-                                mauris suspendisse. Elit dis.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum
+                                est suspendisse tempor dui. Fringilla dis tincidunt morbi risus
+                                interdum urna, odio ac. Sit in venenatis gravida enim vitae, nibh
+                                blandit molestie. Et, nulla nisl laoreet vel tincidunt enim,
+                                venenatis. Viverra eget lobortis massa viverra at faucibus mauris
+                                suspendisse. Elit dis.
                               </p>
                             </div>
                             <div className="overview-description">
@@ -107,27 +117,33 @@ const Myc2eOverview = ({
                           {playlistsContent?.map((playlist, key) => {
                             return (
                               <Accordion.Item eventKey={key}>
-                                <Accordion.Header>
-                                  {playlist.title}
-                                </Accordion.Header>
-                                {playlist?.activities?.map((activity) => {
-                                  return (
-                                    <Accordion.Body
-                                      onClick={() =>
-                                        setActivityh5p(
-                                          JSON.parse(
-                                            contentDetail[
-                                              returnIndex(
-                                                `${activity.h5p_content_id}-h5p.json`
-                                              )
-                                            ]
-                                          )
-                                        )
-                                      }
-                                    >
-                                      {activity.title}
-                                    </Accordion.Body>
-                                  );
+                                <Accordion.Header>{playlist}</Accordion.Header>
+                                {totalActivities?.map((activity) => {
+                                  if (activity?.subManifest?.includes(playlist)) {
+                                    return (
+                                      <Accordion.Body
+                                        onClick={async () => {
+                                          for (var i = 0; i < contents.length; i++) {
+                                            const contentRead = await loadzipper.files[
+                                              contents[i]
+                                            ].async("text");
+                                            // contentsDetail.push(contentRead);
+                                            if (
+                                              contents[i].includes(activity.name) &&
+                                              contents[i].includes("-h5p")
+                                            ) {
+                                              console.log("activitydata", contentRead);
+                                              setActivityh5p(JSON.parse(contentRead));
+                                            }
+                                          }
+                                        }}
+                                      >
+                                        {activity.name}
+                                      </Accordion.Body>
+                                    );
+                                  } else {
+                                    <h3>No Activity found</h3>;
+                                  }
                                 })}
                               </Accordion.Item>
                             );

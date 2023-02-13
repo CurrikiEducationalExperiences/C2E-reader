@@ -772,6 +772,9 @@ a {
 .course-detail-wrap {
   padding-bottom: 25px;
 }
+.course-detail-wrap .tab-content .accordion .accordion-body{
+  cursor: pointer;
+}
 .overview-description p {
   font-style: normal;
   font-weight: normal;
