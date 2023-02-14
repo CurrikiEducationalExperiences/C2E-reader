@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import backicon from "../assets/images//icons/back-icon.svg";
-import courselist from "../assets/images/course-list-img.png";
-import updateicon from "../assets/images/update-icon.svg";
-import homemenuicon from "../assets/images/icons/home-menu-icon.svg";
-import searchmenuicon from "../assets/images/icons/search-menu-icon.svg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Accordion from "react-bootstrap/Accordion";
+import courselist from "../assets/images/course-list-img.png";
+import homemenuicon from "../assets/images/icons/home-menu-icon.svg";
+import searchmenuicon from "../assets/images/icons/search-menu-icon.svg";
 
 const Myc2eOverview = ({
   playlistsContent,
@@ -21,10 +19,10 @@ const Myc2eOverview = ({
   };
   useEffect(() => {
     (async () => {
-      const contentsDetail = [];
+      // iterate again through each file in zip directory
       for (var i = 0; i < contents.length; i++) {
         const contentRead = await loadzipper.files[contents[i]].async("text");
-        // contentsDetail.push(contentRead);
+        // filter total number for activities based on c2e json in activity folder
         if (contents[i].includes("/activities/c2e.json")) {
           const c2edata = JSON.parse(contentRead);
           c2edata?.c2eContain?.[1].c2eComponents?.map(async (resource) => {
@@ -41,11 +39,6 @@ const Myc2eOverview = ({
         <>
           <div className="container-fluid">
             <div className="row">
-              {/* <div className="col-12">
-                <div className="header-menu mb-0" onclick="history.back()">
-                  <img src={backicon} width="24" height="24" />
-                </div>
-              </div> */}
               <div className="main-wrap">
                 <div className="course-detail-wrap">
                   <div className="thumb-content">
@@ -90,26 +83,6 @@ const Myc2eOverview = ({
                       </Tab>
 
                       <Tab eventKey="Content" title="Content">
-                        {/* <div className="tab-content" id="myTabContent">
-                      <div
-                        className="tab-pane fade"
-                        id="course-content"
-                        role="tabpanel"
-                        aria-labelledby="course-content-tab"
-                      >
-                        <div
-                          className="tab-pane fade"
-                          id="course-content"
-                          role="tabpanel"
-                          aria-labelledby="course-content-tab"
-                        >
-                          <div id="main">
-                            <h4 className="playlist-head">Playlists</h4>
-                            <div className="accordion" id="faq"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                         <div id="main">
                           <h4 className="playlist-head">Playlists</h4>
                         </div>
@@ -123,6 +96,7 @@ const Myc2eOverview = ({
                                     return (
                                       <Accordion.Body
                                         onClick={async () => {
+                                          // on activity click find your respective activity from the total activity
                                           for (var i = 0; i < contents.length; i++) {
                                             const contentRead = await loadzipper.files[
                                               contents[i]
@@ -132,7 +106,7 @@ const Myc2eOverview = ({
                                               contents[i].includes(activity.name) &&
                                               contents[i].includes("-h5p")
                                             ) {
-                                              console.log("activitydata", contentRead);
+                                              // set h5p data for repsective activity
                                               setActivityh5p(JSON.parse(contentRead));
                                             }
                                           }
@@ -151,47 +125,9 @@ const Myc2eOverview = ({
                         </Accordion>
                       </Tab>
                     </Tabs>
-                    {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
-                  <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="overview-tab"
-                      data-toggle="tab"
-                      href="#overview"
-                      role="tab"
-                      aria-controls="overview"
-                      aria-selected="true"
-                    >
-                      Overview
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="course-content-tab"
-                      data-toggle="tab"
-                      href="#course-content"
-                      role="tab"
-                      aria-controls="course-content"
-                      aria-selected="false"
-                    >
-                      Content
-                    </a>
-                  </li>
-                </ul> */}
-                    {/* <div className="loading"></div> */}
                   </div>
                 </div>
               </div>
-              {/* <div className="col-12">
-            <div className="alert-message-box">
-              <div className="alert-wrap update">
-                <div className="alert-icon" onclick="window.location.reload()">
-                  <img src={updateicon} /> Update
-                </div>
-              </div>
-            </div>
-          </div> */}
             </div>
           </div>
           <div className="c23-bottom-menu">

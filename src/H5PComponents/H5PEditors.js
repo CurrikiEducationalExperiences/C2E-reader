@@ -12,13 +12,12 @@ const H5PEditor = ({ h5p }) => {
       h5pWrapper.innerHTML = h5p.embed_code?.trim();
       const newStyles = h5p.settings?.core.styles.concat(h5p.settings.loadedCss);
       const newScripts = h5p.settings?.core.scripts.concat(h5p.settings.loadedJs);
-
       // Load H5P assets
 
       loadAssets(newStyles, newScripts);
     }
   }, [h5p]);
-
+  // load h5p style
   const loadAssets = (styles, scripts) => {
     styles?.forEach((style) => {
       const link = document.createElement("link");
@@ -37,6 +36,7 @@ const H5PEditor = ({ h5p }) => {
       document.body.appendChild(element);
     });
   };
+  // load h5p content
   return <div>{h5p && <div id="curriki-h5p-wrapper">Loading...</div>}</div>;
 };
 
