@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import c2e from '../assets/images/c2e.png';
-import logo from '../assets/images/logo.png';
+
 import upload from '../assets/images/upload (1).svg';
 import JSZip from 'jszip';
 import Myc2eOverview from './myc2eoverview';
-
+import Header from './header';
 const Myc2e = () => {
   const [contentData, setcontentData] = useState();
   const [contentDetail, setcontentDetail] = useState(null);
@@ -15,7 +15,7 @@ const Myc2e = () => {
   const inp = useRef();
   return (
     <div className="reader-c2e">
-      <img src={logo} alt="logo" className="header-logo" />
+      <Header />
       {!contentDetail ? (
         <div className="reader-main">
           <div className="img-box">

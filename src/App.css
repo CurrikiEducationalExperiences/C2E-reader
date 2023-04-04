@@ -31,7 +31,7 @@
 
 .reader-c2e .header-logo {
   width: 80px;
-  margin: 30px;
+
 }
 
 .reader-c2e .img-box {
@@ -198,3 +198,37 @@
   border-radius: 50%;
   background-color: #ccc;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+  align-items: center;
+}
+.header .login {
+  background-color: #084892;
+  border: none;
+  padding: 10px 30px;
+  color: #fff;
+  border-radius: 5px;
+  height: 50px;
+}
+
+.header .login-user {
+  display: flex;
+  gap:15px
+}
+
+.header .user-info {
+  display: flex;
+  gap:15px;
+  align-items: center;
+}
+
+.header .user-info img {
+  width:70px;
+  border-radius: 50%;
+}
+.header .user-info h2 {
+ font-size: 22px;
+}
+
