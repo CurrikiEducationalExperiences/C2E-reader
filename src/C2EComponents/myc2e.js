@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import c2e from '../assets/images/c2e.png';
-import { CHAIN_NAMESPACES } from '@web3auth/base';
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { Web3Auth } from '@web3auth/modal';
 import { ADAPTER_EVENTS } from '@web3auth/base';
 import upload from '../assets/images/upload (1).svg';
@@ -32,16 +32,11 @@ const Myc2e = () => {
       const web3auth = new Web3Auth({
         clientId:
           'BNW0_55WnZZSF6hjmoLGsx2d7NQ_KHuFQnsGOPUPjwWDJAAiT-9iBfu_TeLRkLH3NiKfao04OgEgeCS86JfSFeo',
-
         chainConfig: {
-          chainNamespace: CHAIN_NAMESPACES.EIP155, // SOLANA, OTHER
+          chainNamespace: 'eip155',
           chainId: '0x1',
-          rpcTarget: 'https://rpc.ankr.com/eth',
-          displayName: 'Ethereum Mainnet',
-          blockExplorer: 'https://etherscan.io',
-          ticker: 'ETH',
-          tickerName: 'Ethereum',
         },
+
       });
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {
         console.log('connected to wallet', web3auth);
@@ -61,6 +56,15 @@ const Myc2e = () => {
       });
 
       setWeb3auth(web3auth);
+      const openloginAdapter = new OpenloginAdapter({
+        adapterSettings: {
+
+          network: "testnet",
+        },
+      });
+      web3auth.configureAdapter(openloginAdapter);
+
+
 
       await web3auth.initModal();
     })();
