@@ -70,7 +70,7 @@ const Myc2e = () => {
            </div>*/}
 
           {walletConnection ? (
-            <div className="login-text">
+            <div className="login-text text-detail">
               <h3>How does it work?</h3>
               <p>
                 After you have licensed a C2E from a digital marketplace, you will receive an email
@@ -194,7 +194,7 @@ const Myc2e = () => {
           />
         </div>
       )}
-      <footer class="footer-all">
+      {/*<footer class="footer-all">
         <a
           rel="noreferrer"
           class="footer-link"
@@ -219,7 +219,7 @@ const Myc2e = () => {
         >
           Help Center
         </a>
-      </footer>
+          </footer>*/}
     </div>
   );
 };

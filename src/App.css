@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: calc(100% - 150px);
+  min-height: calc(100% - 150px);
   width: 100%;
   /* flex-wrap: wrap-reverse; */
   padding: 20px clamp(24px, 7vw, 120px);
@@ -100,11 +100,6 @@
   }
   .reader-c2e .uploadBox {
     flex-shrink: 1;
-  }
-}
-@media (max-width: 850px) {
-  .reader-c2e .reader-main {
-    height: 100%;
   }
 }
 
