@@ -31,7 +31,8 @@ const Myc2e = () => {
     (async () => {
       const web3auth = new Web3Auth({
         clientId:
-          'BOweQo3kUPEy3FhGecCQrT30eF99IpGky0kIrCwev_wuSbCBvCQmSHpMVQTIa2yL6p0c6FB_sC5J-cIbhBNGOKs',
+          'BI6y343_cgGmvdwPSlCa2_tIdtPqOtkyEpPEzMxOw4Trd5LSFe5c89M7hoaso485QVpjqH01VndcKvhn1avTsAY',
+
         chainConfig: {
           chainNamespace: 'eip155',
           chainId: '0x1',
