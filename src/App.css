@@ -68,7 +68,7 @@
 }
 
 .reader-c2e .uploadBox .iconbox {
-  border: 6px solid #ccc;
+  /* border: 6px solid #ccc; */
   width: 70px;
   height: 70px;
   border-radius: 50%;

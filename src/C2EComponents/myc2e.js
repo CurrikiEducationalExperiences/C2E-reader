@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react';
-import c2e from '../assets/images/c2e.png';
+import React, { useState, useRef, useEffect } from 'react';
+
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { Web3Auth } from '@web3auth/modal';
 import { ADAPTER_EVENTS } from '@web3auth/base';
-import upload from '../assets/images/upload (1).svg';
 import JSZip from 'jszip';
+
 import Myc2eOverview from './myc2eoverview';
 import Header from './header';
-import { useEffect } from 'react';
+
+import upload from '../assets/images/upload (1).svg';
+
 const Myc2e = () => {
   const [contentData, setcontentData] = useState();
   const [contentDetail, setcontentDetail] = useState(null);
@@ -17,6 +21,7 @@ const Myc2e = () => {
   const [loadzipper, setloadzipper] = useState(null);
   const [web3auth, setWeb3auth] = useState(null);
   const [walletConnection, setWalletConneciton] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const inp = useRef();
 
   const login = async () => {
@@ -36,7 +41,6 @@ const Myc2e = () => {
           chainNamespace: 'eip155',
           chainId: '0x1',
         },
-
       });
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {
         console.log('connected to wallet', web3auth);
@@ -58,13 +62,10 @@ const Myc2e = () => {
       setWeb3auth(web3auth);
       const openloginAdapter = new OpenloginAdapter({
         adapterSettings: {
-
-          network: "testnet",
+          network: 'testnet',
         },
       });
       web3auth.configureAdapter(openloginAdapter);
-
-
 
       await web3auth.initModal();
     })();
@@ -108,13 +109,10 @@ const Myc2e = () => {
             <div className="box">
               <h1>Curriki Educational Experiences Reader</h1>
               {walletConnection && (
-                <div
-                  className="iconbox"
-                  onClick={() => {
-                    inp.current.click();
-                  }}
-                >
-                  <img src={upload} alt="logo" />
+                <div className="iconbox">
+                  <CircularProgressbarWithChildren value={uploadProgress}>
+                    <img src={upload} alt="" />
+                  </CircularProgressbarWithChildren>
                 </div>
               )}
               {walletConnection ? (
@@ -168,6 +166,7 @@ const Myc2e = () => {
                           const contentProject = await loadzip.files['project.json'].async('text');
                           setProjectJSON(JSON.parse(contentProject));
                         }
+
                         // extract array  of playlist depend on directory present in resoruce folder
                         if (
                           resource.fileFormat === 'directory' &&
@@ -189,7 +188,7 @@ const Myc2e = () => {
         <div className="playlist-informtion">
           {/* <button
             onClick={() => {
-              setcontentDetail();
+              setcontentDetail();initModal
             }}
           >
             Back
