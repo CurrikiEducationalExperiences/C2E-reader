@@ -216,7 +216,7 @@
   padding: 0px;
   align-items: center;
   max-width: 1440px;
-  margin:0 auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   padding: 10px 0px;
@@ -331,7 +331,6 @@
   border-bottom: 2px solid #084892;
   width: fit-content;
   padding-bottom: 5px;
-
 }
 .sort-filter {
   display: flex;
@@ -385,7 +384,6 @@
   font-size: 14px;
   font-family: Rubik;
   line-height: 20px;
-
 }
 .c2e-cards .add-img-card {
   display: flex;
@@ -654,4 +652,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.sub-heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+  button {
+    background-color: #084892;
+    border: none;
+    padding: 10px 30px;
+    color: #fff;
+    border-radius: 5px;
+  }
+}
+
+.sub-heading-wrapper button {
+  background-color: #084892;
+  border: none;
+  padding: 10px 30px;
+  color: #fff;
+  border-radius: 5px;
 }

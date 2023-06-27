@@ -16,6 +16,7 @@ import Modal from 'react-bootstrap/Modal';
 import Header from './header';
 import { projectdata } from './data';
 import upload from '../assets/images/upload (1).svg';
+import Overview from '../pages/Overview/overview';
 
 const Myc2e = () => {
   // const [contentData, setcontentData] = useState();
@@ -28,7 +29,7 @@ const Myc2e = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow1, setModalShow1] = React.useState(false);
-
+  const [activeC2E, setActiveC2e] = useState(false);
   const [c2e, c2edetail] = useState(null);
   const [projects, setProjects] = useState(null);
   const [playlists, setplaylists] = useState([]);
@@ -106,7 +107,7 @@ const Myc2e = () => {
 
   useEffect(() => {
     if (projects?.length) {
-      setModalShow1(true);
+      setModalShow(true);
     }
   }, [projects]);
 
@@ -177,9 +178,30 @@ const Myc2e = () => {
       <div className="header-container">
         <Header web3auth={web3auth} walletConnection={walletConnection} />
       </div>
-      <div className="reader-c2e">
-        <Home walletConnection={walletConnection} />
-      </div>
+      {!modalShow ? (
+        <div className="reader-c2e">
+          <Home
+            setJSlipParser={setJSlipParser}
+            setActiveC2e={setActiveC2e}
+            setModalShow={setModalShow}
+            walletConnection={walletConnection}
+          />
+        </div>
+      ) : (
+        <Overview
+          projects={projects}
+          playlists={playlists}
+          activity={activity}
+          activeC2E={activeC2E}
+          setModalShow={setModalShow}
+          setActivityh5p={setActivityh5p}
+        />
+      )}
+      <MyVerticallyCenteredModal
+        show={modalShow1}
+        onHide={() => setModalShow1(false)}
+        activityh5p={activityh5p}
+      />
     </div>
   );
 };
@@ -208,31 +230,31 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-function MyVerticallyCenteredModal1(props) {
-  const { activityh5p } = props;
-  console.log(activityh5p);
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter"></Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="validator">
-          <div>
-            <Spinner variant="primary" animation="grow" />
-            <Spinner variant="primary" animation="grow" />
-            <Spinner variant="primary" animation="grow" />
-          </div>
-          We are validing C2E licensing information and description.
-        </div>
-      </Modal.Body>
-    </Modal>
-  );
-}
+// function MyVerticallyCenteredModal1(props) {
+//   const { activityh5p } = props;
+//   console.log(activityh5p);
+//   return (
+//     <Modal
+//       {...props}
+//       size="lg"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton>
+//         <Modal.Title id="contained-modal-title-vcenter"></Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//         <div className="validator">
+//           <div>
+//             <Spinner variant="primary" animation="grow" />
+//             <Spinner variant="primary" animation="grow" />
+//             <Spinner variant="primary" animation="grow" />
+//           </div>
+//           We are validing C2E licensing information and description.
+//         </div>
+//       </Modal.Body>
+//     </Modal>
+//   );
+// }
 
 export default Myc2e;

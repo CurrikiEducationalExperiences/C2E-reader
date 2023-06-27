@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import searchIcon from '../../assets/images/icons/search1.png';
 import addIcon from '../../assets/images/icons/add-icon.svg';
 import bgImg from '../../assets/images/principles-micro.png';
 import NavigationIcon from '../../assets/images/icons/navigation-icon.svg';
 import DownloadIcon from '../../assets/images/icons/actions-download.svg';
 import { projectdata } from '../../C2EComponents/data';
-const Home = ({ walletConnection }) => {
+import JSZip from 'jszip';
+const Home = ({ walletConnection, setModalShow, setActiveC2e, setJSlipParser }) => {
+  const inp = useRef()
   return (
     <div className="main-container">
       <div className="heading">
@@ -21,20 +23,38 @@ const Home = ({ walletConnection }) => {
           <img src={searchIcon} alt="search" />
         </div>
       </div>
+
       <h4 className="sub-heading">My C2E’s</h4>
+
+
       {/* <div className="sort-filter">
         <span className="filter-box active">All</span>
         <span className="filter-box">Due date</span>
       </div> */}
       <br />
       <div className="c2e-cards">
-        <div className="add-card">
+        <div onClick={()=>{
+          inp?.current?.click()
+        }} className="add-card">
           <img src={addIcon} alt="add icon" />
           <h5 className="add-text">Add C2E</h5>
+          <input
+                ref={inp}
+                type="file"
+                style={{ display: 'none' }}
+                onChange={async (e) => {
+                  const loadzip = await JSZip.loadAsync(e.target.files[0]);
+                  setJSlipParser(loadzip);
+                }}
+                />
         </div>
         {projectdata?.map((data) => {
           return (
             <div
+            onClick={()=>{
+              setModalShow(true)
+              setActiveC2e(data)
+            }}
               className="add-img-card "
               style={{
                 backgroundImage: `url(${data?.general?.thumb_url})`,
