@@ -603,3 +603,17 @@
   background: #2e68bf;
   color: #fff;
 }
+.custom_dropdown {
+  width: fit-content;
+  margin-left: auto;
+  .dropdown {
+    .dropdown-toggle {
+      background: transparent;
+      border: none;
+      padding: 0;
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

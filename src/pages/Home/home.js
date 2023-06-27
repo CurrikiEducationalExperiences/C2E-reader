@@ -1,4 +1,5 @@
 import React from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 import searchIcon from '../../assets/images/icons/search1.png';
 import addIcon from '../../assets/images/icons/add-icon.svg';
 import bgImg from '../../assets/images/principles-micro.png';
@@ -40,13 +41,36 @@ const Home = () => {
             backgroundSize: 'cover',
           }}
         >
-          {/* <div className="dropdown-icon">
-            <img src={NavigationIcon} alt="navigation" />
-          </div> */}
-          <div className="add-more-img">
+          <div className="dropdown-icon">
+            <div className="custom_dropdown">
+              <Dropdown>
+                <Dropdown.Toggle variant="" id="dropdown-basic">
+                  <img src={NavigationIcon} alt="navigation" />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <div className="flex items-center w-full gap-1">
+                      <p className="font-normal text-[10px] leading-[20px] text-primarycolor2 m-0">
+                        Preview
+                      </p>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <div className="">
+                      <p className="font-normal text-[10px] leading-[20px] text-primarycolor2 m-0">
+                        Add
+                      </p>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
+          {/* <div className="add-more-img">
             <p className="">Add</p>
             <img src={DownloadIcon} alt="download" />
-          </div>
+          </div> */}
           <div className="card-detail">
             <h5 className="card-text">Add C2E</h5>
             <p className="">13 Jan 2023</p>
