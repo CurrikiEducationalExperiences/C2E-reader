@@ -370,7 +370,7 @@
   width: 200px;
   height: 130px;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 8px;
   border-radius: 12px;
@@ -381,9 +381,10 @@
 .c2e-cards .add-card .add-text {
   color: #2e68bf;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-family: Rubik;
   line-height: 20px;
+  font-weight: 500;
 }
 .c2e-cards .add-img-card {
   display: flex;
@@ -672,4 +673,32 @@
   padding: 10px 30px;
   color: #fff;
   border-radius: 5px;
+}
+.custom_dropdown {
+  width: fit-content;
+  margin-left: auto;
+}
+.custom_dropdown .dropdown .dropdown-toggle {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.custom_dropdown .dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.custom_dropdown .dropdown .dropdown-menu p {
+  color: #084892;
+  font-size: 14px;
+  font-family: Open Sans;
+  line-height: 16px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
+.custom_dropdown .dropdown .dropdown-menu .item-about {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }

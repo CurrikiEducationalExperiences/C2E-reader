@@ -1,4 +1,6 @@
 import React, {useRef} from 'react';
+
+import Dropdown from 'react-bootstrap/Dropdown';
 import searchIcon from '../../assets/images/icons/search1.png';
 import addIcon from '../../assets/images/icons/add-icon.svg';
 import bgImg from '../../assets/images/principles-micro.png';
@@ -6,8 +8,12 @@ import NavigationIcon from '../../assets/images/icons/navigation-icon.svg';
 import DownloadIcon from '../../assets/images/icons/actions-download.svg';
 import { projectdata } from '../../C2EComponents/data';
 import JSZip from 'jszip';
+import plusIcon from '../../assets/images/icons/plus-icon.png';
+
 const Home = ({ walletConnection, setModalShow, setActiveC2e, setJSlipParser }) => {
   const inp = useRef()
+
+
   return (
     <div className="main-container">
       <div className="heading">
@@ -64,7 +70,27 @@ const Home = ({ walletConnection, setModalShow, setActiveC2e, setJSlipParser }) 
               }}
             >
               <div className="dropdown-icon">
-                <img src={NavigationIcon} alt="navigation" />
+                <div className="custom_dropdown">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="" id="dropdown-basic">
+                      <img src={NavigationIcon} alt="navigation" />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <div className="item-about">
+                          <p className="">Preview</p>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <div className="item-about">
+                          {/* <img src={plusIcon} alt="plusIcon" /> */}
+                          <p className="">Add</p>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
               </div>
               {/* <div className="add-more-img">
               <p className="">Add</p>
