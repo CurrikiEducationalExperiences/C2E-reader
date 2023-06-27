@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap');
+body {
+  font-family: 'Rubik', sans-serif;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
@@ -701,4 +706,66 @@
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+/* login */
+
+.login-conrainer {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+}
+.login-conrainer .login-banner {
+  width: 40%;
+  height: 100%;
+  background-image: url('./assets/images/my-c2e-login-banner.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-conrainer .login-form {
+  width: 60%;
+  height: 100%;
+  background: #ffffff;
+  padding: 40px;
+}
+.login-conrainer .login-form .c2e-logo {
+  width: 100px;
+}
+.login-conrainer .login-form .main-form-wrapper {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.login-conrainer .login-banner .login-banner-heading {
+  color: #084892;
+  font-size: 44px;
+  font-family: Rubik;
+  font-weight: 700;
+  text-align: center;
+  margin: 40px 0 0;
+}
+.login-conrainer .login-banner .login-banner-heading span {
+  color: #f8af2c;
+}
+
+/* w3a-modal  */
+
+.w3a-modal {
+  justify-content: flex-end !important;
+  width: 40%;
+  margin-left: 40%;
+}
+
+@media (max-width: 992px) {
+  .login-conrainer .login-banner {
+    display: none;
+  }
+  .w3a-modal {
+    justify-content: center !important;
+    width: 100%;
+    margin-left: 0;
+  }
 }
