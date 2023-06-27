@@ -17,7 +17,7 @@ const Header = ({ web3auth, walletConnection }) => {
         <div className="login-user">
           <div className="user-info">
             <img src={walletConnection?.profileImage} alt="" />
-            <h2>{walletConnection?.name}</h2>
+            {/* <h2>{walletConnection?.name}</h2> */}
           </div>
           <button className="login" onClick={() => logout()}>
             Logout
