@@ -368,7 +368,8 @@
 }
 .c2e-cards .add-card {
   display: flex;
-  padding: 36px 50.5px 8px 51px;
+  width: 200px;
+  height: 130px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
