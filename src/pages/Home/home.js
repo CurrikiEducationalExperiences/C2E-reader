@@ -18,6 +18,7 @@ const Home = ({
 }) => {
   const inp = useRef();
   const [loader, setLoader] = useState();
+  const [error, setError] = useState();
 
   return (
     <>
@@ -40,13 +41,20 @@ const Home = ({
         </div>
 
         <h4 className="sub-heading">My C2E’s</h4>
-        {loader && (
+        {loader && !error && (
           <div>
             <Alert variant="warning">
               Validating and decrypting the C2E file, please wait ....
             </Alert>
           </div>
         )}
+        {/* {error && !loader && (
+           <div>
+           <Alert variant="error">
+            {error}
+           </Alert>
+         </div>
+        )} */}
         {/* <div className="sort-filter">
         <span className="filter-box active">All</span>
         <span className="filter-box">Due date</span>
@@ -83,6 +91,7 @@ const Home = ({
                 )
                   .then((response) => response.arrayBuffer())
                   .then(async (data) => {
+
                     setLoader(false);
                     const blob = new Blob([data], {
                       type: 'application/octet-stream',
@@ -95,12 +104,14 @@ const Home = ({
                         const loadzip1 = await JSZip.loadAsync(
                           zipEntry.async('blob')
                         );
+                        console.log(loadzip1)
 
                         setJSlipParser(loadzip1);
                       }
                     });
                   })
                   .catch((error) => {
+                    setError(error)
                     setLoader(false);
                   });
               }}
