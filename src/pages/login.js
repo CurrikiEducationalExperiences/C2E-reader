@@ -18,15 +18,17 @@ const Login = ({ web3auth }) => {
         <h1 className="login-banner-heading">
           WELCOME TO <span>C2E</span>
         </h1>
+
         <div className="sub-banner-alert-heading">
-          <h1 className="login-banner-heading">
+          <h1>
             STEP INTO A WORLD WHERE <br /> LEARNING IS AN EXTRAORDINARY <br />
             <span>ADVENTURE</span>
           </h1>
+
+          <p className="sub-text">
+            Get ready to be captivated by wonder of <span>C2E</span>
+          </p>
         </div>
-        <p className="sub-text">
-          Get ready to be captivated by wonder of <span>C2E</span>
-        </p>
       </div>
     </div>
   );
