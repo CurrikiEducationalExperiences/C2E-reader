@@ -16,17 +16,17 @@ const Login = ({ web3auth }) => {
     <div className="login-conrainer">
       <div className="login-banner">
         <h1 className="login-banner-heading">
-          WELCOME TO <span>C2E</span>
+          Welcome To <span>Curriki Educational Experiences</span>
         </h1>
 
         <div className="sub-banner-alert-heading">
           <h1>
-            STEP INTO A WORLD WHERE <br /> LEARNING IS AN EXTRAORDINARY <br />
-            <span>ADVENTURE</span>
+            STEP INTO A WORLD WHERE <br /> LEARNING IS AN  <br />
+            <span>EXTRAORDINARY ADVENTURE</span>
           </h1>
 
           <p className="sub-text">
-            Get ready to be captivated by wonder of <span>C2E</span>
+            Get ready to be captivated by the wonder of  <span> Curriki Educational Experiences</span> (C2E)
           </p>
         </div>
       </div>
