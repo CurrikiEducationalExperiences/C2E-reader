@@ -754,8 +754,7 @@ body {
 /* w3a-modal  */
 
 .w3a-modal {
-  justify-content: flex-end !important;
-  width: 40%;
+
   margin-left: 40%;
 }
 

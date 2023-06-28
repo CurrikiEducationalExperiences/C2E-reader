@@ -1,5 +1,8 @@
 import React from 'react';
 import logo from '../assets/images/logo.png';
+
+import { useHistory  } from "react-router-dom";
+
 const Header = ({ web3auth, walletConnection }) => {
   const logout = async () => {
     if (!web3auth) {
@@ -8,7 +11,9 @@ const Header = ({ web3auth, walletConnection }) => {
     }
 
     await web3auth.logout();
+    history.push("/login");
   };
+  const history = useHistory()
 
   return (
     <div className="header">
@@ -19,7 +24,13 @@ const Header = ({ web3auth, walletConnection }) => {
             <img src={walletConnection?.profileImage} alt="" />
             {/* <h2>{walletConnection?.name}</h2> */}
           </div>
-          <button className="login" onClick={() => logout()}>
+          <button
+            className="login"
+            onClick={() => {
+              logout();
+
+            }}
+          >
             Logout
           </button>
         </div>
