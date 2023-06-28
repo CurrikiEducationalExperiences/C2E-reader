@@ -27,6 +27,10 @@ function App() {
           chainNamespace: 'eip155',
           chainId: '0x1',
         },
+        uiConfig :{
+          appName: "C2E",
+          appLogo: "https://stage.currikistudio.org/api/storage/organizations/5mmPoyGbq6kvBanoliG5HSFNIMrSddcL0vI8U2sm.png"
+        }
       });
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {
         console.log('connected to wallet', web3auth);

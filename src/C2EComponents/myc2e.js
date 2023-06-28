@@ -111,7 +111,7 @@ const Myc2e = ({ walletConnection }) => {
   return (
     <div className="">
       {!modalShow ? (
-        <div className="reader-c2e">
+        <div className="">
           <Home
             setJSlipParser={setJSlipParser}
             setActiveC2e={setActiveC2e}
