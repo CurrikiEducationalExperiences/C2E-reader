@@ -1,15 +1,12 @@
 import React from 'react';
 
-const Index = ({ text, bgColor }) => {
+const Index = ({ blueText, yellowText }) => {
   return (
-    <div
-      className="main-banner"
-      style={{
-        background: bgColor,
-      }}
-    >
+    <div className="main-banner">
       <div className="banner-content">
-        <h1>{text}</h1>
+        <h1>
+          {blueText} <span>{yellowText}</span>{' '}
+        </h1>
       </div>
     </div>
   );

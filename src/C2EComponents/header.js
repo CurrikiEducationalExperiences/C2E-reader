@@ -1,5 +1,5 @@
 import React from 'react';
-import C2ELogo from '../assets/images/c2e-logo.svg';
+import C2ELogo from '../assets/images/c2e-logo-white.svg';
 import { useHistory } from 'react-router-dom';
 
 const Header = ({ web3auth, walletConnection }) => {
