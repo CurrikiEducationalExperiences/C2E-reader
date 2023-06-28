@@ -5,9 +5,7 @@ import H5PEditor from '../../H5PComponents/H5PEditors';
 
 const Overview = ({
   activityh5p,
-
   setActivityh5p,
-
   playlists,
   activity,
   setModalShow,
@@ -15,7 +13,7 @@ const Overview = ({
 }) => {
   const [key, setKey] = useState('Overview');
   return (
-    <>
+    <div className="main-container">
       <div className="sub-heading-wrapper">
         <h2 className="card-name">{activeC2E?.general?.title}</h2>
 
@@ -116,7 +114,7 @@ const Overview = ({
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

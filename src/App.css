@@ -224,7 +224,7 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  padding: 10px 0px;
+  padding: 10px 20px;
 }
 
 .header-container {
@@ -283,7 +283,7 @@ body {
 .main-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 60px clamp(24px, 15vw, 120px);
+  /* padding: 60px clamp(24px, 15vw, 120px); */
 }
 
 .heading h3 {
@@ -369,7 +369,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  justify-content: space-between;
+
 }
 .c2e-cards .add-card {
   display: flex;
