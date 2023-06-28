@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from '../assets/images/logo.png';
-
-import { useHistory  } from "react-router-dom";
+import C2ELogo from '../assets/images/c2e-logo.svg';
+import { useHistory } from 'react-router-dom';
 
 const Header = ({ web3auth, walletConnection }) => {
   const logout = async () => {
@@ -11,13 +10,13 @@ const Header = ({ web3auth, walletConnection }) => {
     }
 
     await web3auth.logout();
-    history.push("/login");
+    history.push('/login');
   };
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <div className="header">
-      <img src={logo} alt="logo" className="header-logo" />
+      <img src={C2ELogo} alt="logo" className="header-logo" />
       {walletConnection ? (
         <div className="login-user">
           <div className="user-info">
@@ -28,7 +27,6 @@ const Header = ({ web3auth, walletConnection }) => {
             className="login"
             onClick={() => {
               logout();
-
             }}
           >
             Logout
