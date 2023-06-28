@@ -224,7 +224,7 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  padding: 16px 24px;
+  padding: 10px 20px;
 }
 
 .header-container {
@@ -285,7 +285,7 @@ body {
 .main-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 60px clamp(24px, 4vw, 120px);
+  /* padding: 60px clamp(24px, 15vw, 120px); */
 }
 
 .heading h3 {
@@ -371,7 +371,6 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  justify-content: space-between;
 }
 .c2e-cards .add-card {
   display: flex;
@@ -455,6 +454,10 @@ body {
   font-family: Rubik;
   line-height: 20px;
   margin: 0;
+}
+.c2e-cards .add-img-card .card-text:hover {
+  color: #eca41d;
+  text-decoration: underline;
 }
 .c2e-cards .add-img-card p {
   font-size: 8px;

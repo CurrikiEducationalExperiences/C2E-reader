@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, Spinner } from 'react-bootstrap';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import searchIcon from '../../assets/images/icons/search1.png';
 import addIcon from '../../assets/images/icons/add-icon.svg';
 import NavigationIcon from '../../assets/images/icons/navigation-icon.svg';
-import { projectdata } from '../../C2EComponents/data';
+import DeleteIcon from '../../assets/images/icons/delete-icon.svg';
+
 import JSZip from 'jszip';
 
 import Slider from '../../components/slider';
@@ -19,10 +20,22 @@ const Home = ({
   const inp = useRef();
   const [loader, setLoader] = useState();
   const [error, setError] = useState();
+  const [apiProject, setapiProject] = useState();
+
+  useEffect(() => {
+    (async () => {
+      const allProjects = await fetch(
+        'https://c2e-api.curriki.org/api/v1/c2e/products?userId=1&query='
+      );
+      const result = await allProjects.json();
+      setapiProject(result?.projects);
+    })();
+  }, []);
 
   return (
     <>
       <Slider />
+      <br />
       <div className="main-container">
         <div
           style={{
@@ -48,10 +61,11 @@ const Home = ({
         </div>
 
         <h4 className="sub-heading">My C2E’s</h4>
-        {loader && !error && (
+        {loader && (
           <div>
             <Alert variant="warning">
-              Validating and decrypting the C2E file, please wait ....
+              <Spinner size="md" /> &nbsp; &nbsp; Validating and decrypting the
+              C2E file, please wait ....
             </Alert>
           </div>
         )}
@@ -83,7 +97,7 @@ const Home = ({
               onChange={async (e) => {
                 setLoader(true);
                 var formdata = new FormData();
-                formdata.append('name', 'bob@curriki.org');
+                formdata.append('user', 'bob@curriki.org');
                 formdata.append('c2e', e.target.files[0]);
                 var requestOptions = {
                   method: 'POST',
@@ -110,7 +124,6 @@ const Home = ({
                         const loadzip1 = await JSZip.loadAsync(
                           zipEntry.async('blob')
                         );
-                        console.log(loadzip1);
 
                         setJSlipParser(loadzip1);
                       }
@@ -124,55 +137,57 @@ const Home = ({
             />
           </div>
 
-          {projectdata?.map((data) => {
-            return (
-              <div
-                onClick={() => {
-                  setModalShow(true);
-                  setActiveC2e(data);
-                }}
-                className="add-img-card "
-                style={{
-                  backgroundImage: `url(${data?.general?.thumb_url})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                }}
-              >
-                <div className="dropdown-icon">
-                  <div className="custom_dropdown">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="" id="dropdown-basic">
-                        <img src={NavigationIcon} alt="navigation" />
-                      </Dropdown.Toggle>
+          {apiProject
+            ?.filter((data) => data?.general?.visible === 1)
+            ?.map((data) => {
+              return (
+                <div
+                  className="add-img-card "
+                  style={{
+                    backgroundImage: `url(${data?.general?.thumb_url})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                  }}
+                >
+                  {/* <div className="dropdown-icon">
+                    <div className="custom_dropdown">
+                      <Dropdown>
+                        <Dropdown.Toggle variant="" id="dropdown-basic">
+                          <img src={NavigationIcon} alt="navigation" />
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item>
-                          <div className="item-about">
-                            <p className="">Preview</p>
-                          </div>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <div className="item-about">
-                            {/* <img src={plusIcon} alt="plusIcon" /> */}
-                            <p className="">Add</p>
-                          </div>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                        <Dropdown.Menu>
+                          <Dropdown.Item>
+                            <div className="item-about">
+                              <p className="">Preview</p>
+                            </div>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <div className="item-about">
+                              <p className="">Add</p>
+                            </div>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div> 
+                  </div> */}
+                  <div className="add-more-img">
+                    <img src={DeleteIcon} alt="download" />
+                  </div>
+                  <div
+                    onClick={() => {
+                      setModalShow(true);
+                      setActiveC2e(data);
+                    }}
+                    className="card-detail"
+                  >
+                    <h5 className="card-text">{data?.general?.title}</h5>
+                    {/* <p className="">13 Jan 2023</p> */}
                   </div>
                 </div>
-                {/* <div className="add-more-img">
-              <p className="">Add</p>
-              <img src={DownloadIcon} alt="download" />
-            </div> */}
-                <div className="card-detail">
-                  <h5 className="card-text">{data?.general?.title}</h5>
-                  {/* <p className="">13 Jan 2023</p> */}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </>
