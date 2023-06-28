@@ -601,32 +601,6 @@ body {
   border-bottom: 2px solid #f8af2c;
 }
 
-.tabs-wrapper .nav-tabs {
-  gap: 16px;
-  padding-bottom: 16px;
-}
-
-.tabs-wrapper .nav-tabs .nav-item .nav-link {
-  display: flex;
-  height: 32px;
-  padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  border-radius: 16px;
-  font-size: 14px;
-  font-family: Rubik;
-  line-height: 20px;
-  background: #f1f1f1;
-  color: #959595;
-  border: none;
-  outline: none;
-}
-.tabs-wrapper .nav-tabs .nav-item .nav-link.active {
-  background: #2e68bf;
-  color: #fff;
-}
-
 .myproject {
   display: flex;
   gap: 20px;
@@ -665,6 +639,8 @@ body {
 .sub-heading-wrapper {
   display: flex;
   justify-content: space-between;
+  padding: 20px;
+  padding-bottom: 0px;
   button {
     background-color: #084892;
     border: none;
@@ -850,4 +826,46 @@ body {
 
 .w3a-footer {
   display: none !important;
+}
+
+.overview-c2e {
+  display: flex;
+  padding: 30px;
+  gap: 20px;
+  height: 100%;
+}
+.overview-c2e .tabs-wrapper {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  height: 100%;
+}
+
+.overview-c2e .player {
+  flex: 3;
+}
+
+.tabs-wrapper .nav-tabs {
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+.tabs-wrapper .nav-tabs .nav-item .nav-link {
+  display: flex;
+  height: 32px;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border-radius: 16px;
+  font-size: 14px;
+  font-family: Rubik;
+  line-height: 20px;
+  background: #f1f1f1;
+  color: #959595;
+  border: none;
+  outline: none;
+}
+.tabs-wrapper .nav-tabs .nav-item .nav-link.active {
+  background: #2e68bf;
+  color: #fff;
 }
