@@ -24,7 +24,14 @@ const Home = ({
     <>
       <Slider />
       <div className="main-container">
-        <div style={{ display: 'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
           <div className="heading">
             <h3>
               <span>Hello,</span>
@@ -91,7 +98,6 @@ const Home = ({
                 )
                   .then((response) => response.arrayBuffer())
                   .then(async (data) => {
-
                     setLoader(false);
                     const blob = new Blob([data], {
                       type: 'application/octet-stream',
@@ -104,14 +110,14 @@ const Home = ({
                         const loadzip1 = await JSZip.loadAsync(
                           zipEntry.async('blob')
                         );
-                        console.log(loadzip1)
+                        console.log(loadzip1);
 
                         setJSlipParser(loadzip1);
                       }
                     });
                   })
                   .catch((error) => {
-                    setError(error)
+                    setError(error);
                     setLoader(false);
                   });
               }}
