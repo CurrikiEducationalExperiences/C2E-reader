@@ -70,7 +70,7 @@ const Home = ({
 
   useEffect(() => {
     listProjects();
-  }, [query]); 
+  }, [query]);
 
   return (
     <>
@@ -157,15 +157,15 @@ const Home = ({
                       const blob = new Blob([data], {
                         type: 'application/octet-stream',
                       });
-  
+
                       const loadzip = await JSZip.loadAsync(blob);
-  
+
                       loadzip.forEach(async (relativePath, zipEntry) => {
                         if (zipEntry.name.includes('.c2e')) {
                           const loadzip1 = await JSZip.loadAsync(
                             zipEntry.async('blob')
                           );
-  
+
                           setJSlipParser(loadzip1);
                         }
                       });

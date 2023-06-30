@@ -29,7 +29,7 @@ function App() {
         },
         uiConfig :{
           appName: "C2E",
-          appLogo: "https://stage.currikistudio.org/api/storage/organizations/5mmPoyGbq6kvBanoliG5HSFNIMrSddcL0vI8U2sm.png"
+          appLogo: "https://franklyapp.netlify.app/web3wallet.png"
         }
       });
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async (data) => {

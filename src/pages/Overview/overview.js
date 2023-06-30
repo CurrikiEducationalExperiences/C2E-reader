@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Accordion, Tab, Tabs } from 'react-bootstrap';
 import BannerImg from '../../assets/images/s2e-banner.png';
+import c2e from '../../assets/images/c2e.png';
 import H5PEditor from '../../H5PComponents/H5PEditors';
 import './style.css';
 
@@ -19,7 +20,7 @@ const Overview = ({
   }, [activity, setActivityh5p]);
   return (
     <div className="overview-wrapper">
-      <div className="main-container">
+      <div className="main-container mikes">
         <div className="sub-heading-wrapper">
           <h2 className="card-name">{activeC2E?.c2eMetadata?.general?.title}</h2>
 
@@ -124,3 +125,49 @@ const Overview = ({
 };
 
 export default Overview;
+
+
+
+// const SliderData = () => {
+//   const settings = {
+//     arrows: false,
+//     dots: false,
+//     infinite: true,
+//     autoplay: true,
+//     speed: 3500,
+//     autoplaySpeed: 3000,
+//     slidesToShow: 1,
+//     slidesToScroll: 1,
+//   };
+//   return (
+//     <div>
+//       <Slider {...settings}>
+//         <div className="">
+//           <Banner
+//             blueText="C2E ensures that your digital documents are effortlessly accessible anytime, "
+//             yellowText="anywhere."
+//           />
+//         </div>
+//         <div className="">
+//           <Banner
+//             blueText="C2E incorporates robust security measures, safeguarding your digital documents against unauthorized access,"
+//             yellowText=" piracy, and data breaches."
+//           />
+//         </div>
+//         <div className="">
+//           <Banner
+//             blueText="C2E allows content creators like you to embed licensing information directly into the digital documents, "
+//             yellowText="preventing unauthorized use"
+//           />
+//         </div>
+//         <div className="">
+//           <Banner
+//             blueText="C2E ensures that intellectual property rights are respected, and  that the creators, the visionaries, "
+//             yellowText="the architects of knowledge are duly recognized and rewarded."
+//           />
+//         </div>
+//       </Slider>
+//     </div>
+//   );
+// };
+

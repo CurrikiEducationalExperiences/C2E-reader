@@ -15,11 +15,12 @@ const Login = ({ web3auth }) => {
   return (
     <div className="login-conrainer">
       <div className="login-banner">
+
+
+        <div className="sub-banner-alert-heading">
         <h1 className="login-banner-heading">
           Welcome To <span>Curriki Educational Experiences</span>
         </h1>
-
-        <div className="sub-banner-alert-heading">
           <h1>
             STEP INTO A WORLD WHERE <br /> LEARNING IS AN  <br />
             <span>EXTRAORDINARY ADVENTURE</span>

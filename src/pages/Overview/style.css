@@ -1,12 +1,17 @@
 .activity-detail {
     margin-left: 2em;
     color:grey;
-    border: solid 1px whitesmoke;
-    margin-top: 1em;
-    height: 4em;
+    border-bottom: solid 1px whitesmoke;
+
     padding-left: 1em;
     display: flex;
     align-items: center;
+    padding-bottom: 12px;
+}
+.activity-detail:hover {
+   background-color: #f8af2c;
+   color:#fff
+
 }
 
 .selected-activity {

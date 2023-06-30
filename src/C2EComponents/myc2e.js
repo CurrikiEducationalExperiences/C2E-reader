@@ -15,11 +15,11 @@ const Myc2e = ({ walletConnection }) => {
   useEffect(() => {
     if (JSlipParser) {
       const contents = [];
-      console.log(JSlipParser);
+
       JSlipParser.forEach((relativePath, zipEntry) => {
         contents.push(zipEntry.name);
       });
-      console.log(contents);
+
       setAllFIles(contents);
     }
   }, [JSlipParser]);
@@ -30,7 +30,7 @@ const Myc2e = ({ walletConnection }) => {
         const c2edata = await returnContentFromUrl('c2e.json');
         setActiveC2e(c2edata);
         const result = await returnContentFromUrl('content/contents.json');
-        console.log(result);
+
         if (result) {
           // projects
           const AllProjects = result?.c2eContents.filter(
