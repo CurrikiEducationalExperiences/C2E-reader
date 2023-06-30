@@ -317,7 +317,6 @@ body {
   color: #959595;
   outline: none;
   font-size: 14px;
-  font-family: Open Sans;
   line-height: 20px;
 }
 .search-wrapper .search-icon {
@@ -461,7 +460,6 @@ body {
 }
 .c2e-cards .add-img-card p {
   font-size: 8px;
-  font-family: Open Sans;
   line-height: 12px;
   color: #fff;
   margin: 0;
@@ -521,9 +519,9 @@ body {
 .c2e-details p {
   color: #515151;
   font-size: 16px;
-  font-family: Open Sans;
   line-height: 24px;
   margin-bottom: 0;
+  margin-left: 2em;
   font-weight: 400;
 }
 
@@ -587,7 +585,6 @@ body {
 .accordion-body .plylist-activity p {
   color: #767676;
   font-size: 16px;
-  font-family: Open Sans;
   line-height: 24px;
   margin: 0;
 }
@@ -677,7 +674,6 @@ body {
 .custom_dropdown .dropdown .dropdown-menu p {
   color: #084892;
   font-size: 14px;
-  font-family: Open Sans;
   line-height: 16px;
   margin-bottom: 0;
   font-weight: 500;

@@ -21,16 +21,56 @@ const Home = ({
   const [loader, setLoader] = useState();
   const [error, setError] = useState();
   const [apiProject, setapiProject] = useState();
+  const [query, setQuery] = useState('');
+  const user = walletConnection.email;
+  const apiBaseUrl = 'https://c2e-api.curriki.org/';
+
+  const listProjects = async () => {
+    const allProjects = await fetch(apiBaseUrl+'api/v1/c2e/reader/listc2e?'+ new URLSearchParams({user, query}));
+    const result = await allProjects.json();
+    setapiProject(result?.projects);
+  };
+
+  const getC2E = (data) => {
+    fetch(data.c2e_url_decoded).then((response) => {
+      response.arrayBuffer().then(async (data) => {
+        setLoader(false);
+        const blob = new Blob([data], {
+          type: 'application/octet-stream',
+        });
+
+        const loadzip = await JSZip.loadAsync(blob);
+        loadzip.forEach(async (relativePath, zipEntry) => {
+          if (zipEntry.name.includes('.c2e')) {
+            const loadzip1 = await JSZip.loadAsync(
+              zipEntry.async('blob')
+            );
+            setJSlipParser(loadzip1);
+          }
+        });
+      });
+    });
+  };
+
+  const deleteC2E = async (data) => {
+    const params = {
+      user,
+      c2eid: data.id
+    }
+    fetch(apiBaseUrl+'api/v1/c2e/reader/deletec2e', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    }).then((r) => {
+      if (r.status !== 200) setError('Error deleting, please try again.');
+
+      listProjects();
+    });
+  };
 
   useEffect(() => {
-    (async () => {
-      const allProjects = await fetch(
-        'https://c2e-api.curriki.org/api/v1/c2e/products?userId=1&query='
-      );
-      const result = await allProjects.json();
-      setapiProject(result?.projects);
-    })();
-  }, []);
+    listProjects();
+  }, [query]); 
 
   return (
     <>
@@ -53,7 +93,7 @@ const Home = ({
             </h3>
           </div>
           <div className="search-wrapper">
-            <input type="text" placeholder="Search your c2e..." />
+            <input type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} />
             <div className="search-icon">
               <img src={searchIcon} alt="search" />
             </div>
@@ -61,6 +101,7 @@ const Home = ({
         </div>
 
         <h4 className="sub-heading">My C2E’s</h4>
+        {error && (<Alert variant="danger">{error}</Alert>)}
         {loader && (
           <div>
             <Alert variant="warning">
@@ -69,20 +110,10 @@ const Home = ({
             </Alert>
           </div>
         )}
-        {/* {error && !loader && (
-           <div>
-           <Alert variant="error">
-            {error}
-           </Alert>
-         </div>
-        )} */}
-        {/* <div className="sort-filter">
-        <span className="filter-box active">All</span>
-        <span className="filter-box">Due date</span>
-      </div> */}
         <br />
         <div className="c2e-cards">
           <div
+            role="button"
             onClick={() => {
               inp?.current?.click();
             }}
@@ -95,9 +126,10 @@ const Home = ({
               type="file"
               style={{ display: 'none' }}
               onChange={async (e) => {
+                if (e.target.files.length === 0) return;
                 setLoader(true);
                 var formdata = new FormData();
-                formdata.append('user', 'bob@curriki.org');
+                formdata.append('user', user);
                 formdata.append('c2e', e.target.files[0]);
                 var requestOptions = {
                   method: 'POST',
@@ -107,26 +139,36 @@ const Home = ({
                 };
 
                 fetch(
-                  'https://c2e-api.curriki.org/api/v1/c2e/decrypt',
+                  apiBaseUrl+'api/v1/c2e/decrypt',
                   requestOptions
                 )
-                  .then((response) => response.arrayBuffer())
-                  .then(async (data) => {
-                    setLoader(false);
-                    const blob = new Blob([data], {
-                      type: 'application/octet-stream',
-                    });
-
-                    const loadzip = await JSZip.loadAsync(blob);
-
-                    loadzip.forEach(async (relativePath, zipEntry) => {
-                      if (zipEntry.name.includes('.c2e')) {
-                        const loadzip1 = await JSZip.loadAsync(
-                          zipEntry.async('blob')
-                        );
-
-                        setJSlipParser(loadzip1);
-                      }
+                  .then(async (response) => {
+                    console.log(response);
+                    if (response.status !== 200) {
+                      response.json().then((e) => setError(e.error)).catch((e) => {
+                        console.log('Error uploading C2E', e);
+                        setError('Error processing C2E. Make sure your file matches the latest C2E standard format.');
+                      });
+                      setLoader(false);
+                      return;
+                    }
+                    response.arrayBuffer().then(async (data) => {
+                      setLoader(false);
+                      const blob = new Blob([data], {
+                        type: 'application/octet-stream',
+                      });
+  
+                      const loadzip = await JSZip.loadAsync(blob);
+  
+                      loadzip.forEach(async (relativePath, zipEntry) => {
+                        if (zipEntry.name.includes('.c2e')) {
+                          const loadzip1 = await JSZip.loadAsync(
+                            zipEntry.async('blob')
+                          );
+  
+                          setJSlipParser(loadzip1);
+                        }
+                      });
                     });
                   })
                   .catch((error) => {
@@ -136,53 +178,29 @@ const Home = ({
               }}
             />
           </div>
-
-          {apiProject
-            ?.filter((data) => data?.general?.visible === 1)
-            ?.map((data) => {
+          {apiProject?.map((data) => {
               return (
                 <div
+                  key={data.id}
                   className="add-img-card "
                   style={{
-                    backgroundImage: `url(${data?.general?.thumb_url})`,
+                    backgroundImage: `url(${data.thumbnail})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                   }}
                 >
-                  {/* <div className="dropdown-icon">
-                    <div className="custom_dropdown">
-                      <Dropdown>
-                        <Dropdown.Toggle variant="" id="dropdown-basic">
-                          <img src={NavigationIcon} alt="navigation" />
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item>
-                            <div className="item-about">
-                              <p className="">Preview</p>
-                            </div>
-                          </Dropdown.Item>
-                          <Dropdown.Item>
-                            <div className="item-about">
-                              <p className="">Add</p>
-                            </div>
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </div> 
-                  </div> */}
                   <div className="add-more-img">
-                    <img src={DeleteIcon} alt="download" />
+                    <img role="button" src={DeleteIcon} alt="delete" onClick={() => { deleteC2E(data) }}/>
                   </div>
                   <div
+                    role="button"
                     onClick={() => {
-                      setModalShow(true);
-                      setActiveC2e(data);
+                      getC2E(data);
                     }}
                     className="card-detail"
                   >
-                    <h5 className="card-text">{data?.general?.title}</h5>
+                    <h5 className="card-text">{data.c2e_json.c2eMetadata.general.title}</h5>
                     {/* <p className="">13 Jan 2023</p> */}
                   </div>
                 </div>

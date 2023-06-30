@@ -55,11 +55,8 @@ const Myc2e = ({ walletConnection }) => {
           );
           const allPlaylistData = [];
           for (let i = 0; i < AllPlaylist?.length; i++) {
-            const playlistData = await returnContentFromUrl(
-              AllPlaylist[i]?.url.charAt(0) === '/'
-                ? AllPlaylist[i]?.url.substr(1, AllPlaylist[i]?.url.length - 1)
-                : AllPlaylist[i]?.url
-            );
+            const playlistData = AllPlaylist[i];
+            playlistData.title = playlistData.url.split('content/')[1].split('.json')[0].replace(/-([a-z])/g, function (g) { return ' ' + g[1].toUpperCase(); });
 
             allPlaylistData.push(playlistData);
           }

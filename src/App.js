@@ -79,41 +79,8 @@ function App() {
             <Myc2e walletConnection={walletConnection} />
           </ProtectedRoute>
         </Route>
-        {/* <Route
-          exact
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <div className="header-container">
-                <Header
-                  web3auth={web3auth}
-                  walletConnection={walletConnection}
-                />
-              </div>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          exact
-          path="/overview"
-          element={
-            <ProtectedRoute>
-              <div className="header-container">
-                <Header
-                  web3auth={web3auth}
-                  walletConnection={walletConnection}
-                />
-              </div>
-              <Overview />
-            </ProtectedRoute>
-          }
-        /> */}
-
         <Route exact path="/login">
-
             <Login web3auth={web3auth} />
-
         </Route>
       </Switch>
     </Router>

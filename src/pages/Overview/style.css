@@ -1,0 +1,25 @@
+.activity-detail {
+    margin-left: 2em;
+    color:grey;
+    border: solid 1px whitesmoke;
+    margin-top: 1em;
+    height: 4em;
+    padding-left: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.selected-activity {
+    padding-left: 4em;
+    font-weight: bolder;
+    color:navy;
+    box-shadow: 0px 3px 3px lightgray;
+}
+
+.overview-wrapper {
+    background-color: whitesmoke;
+    padding-top: 2em;
+    .main-container {
+        background-color: white;
+    }
+}
