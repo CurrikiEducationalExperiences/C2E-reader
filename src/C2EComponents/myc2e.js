@@ -53,8 +53,9 @@ const Myc2e = ({ walletConnection }) => {
                 ? AllEpubData?.file.substr(1, AllEpubData?.file.length - 1)
                 : AllEpubData?.file
             );
-            setEpbFile(AllEpubData1)
-            // setEpbFile(URL.createObjectURL(AllEpubData1));
+            
+            const epubData = await AllEpubData1.async('uint8array');
+            setEpbFile(epubData)
           }
 
           // projects
