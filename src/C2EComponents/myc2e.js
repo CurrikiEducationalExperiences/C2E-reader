@@ -13,7 +13,7 @@ const Myc2e = ({ walletConnection }) => {
   const [activityh5p, setActivityh5p] = useState(null);
   const [JSlipParser, setJSlipParser] = useState(null);
   const [allFiles, setAllFIles] = useState(null);
-  const [epbFile, setEpbFile] = useState();
+  const [epbFile, setEpbFile] = useState(null);
 
   useEffect(() => {
     if (JSlipParser) {
@@ -161,7 +161,7 @@ const Myc2e = ({ walletConnection }) => {
           />
         </div>
       ) : epbFile ? (
-        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} />
+        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} setEpbFile={setEpbFile} />
       ) : (
         <Overview
           projects={projects}
