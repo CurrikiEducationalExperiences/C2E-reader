@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Home from '../pages/Home/home';
 import Overview from '../pages/Overview/overview';
+import Epub2 from '../components/slider/epub2';
 
+import Epub from '../components/slider/epub';
 const Myc2e = ({ walletConnection }) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [activeC2E, setActiveC2e] = useState(false);
@@ -11,12 +13,14 @@ const Myc2e = ({ walletConnection }) => {
   const [activityh5p, setActivityh5p] = useState(null);
   const [JSlipParser, setJSlipParser] = useState(null);
   const [allFiles, setAllFIles] = useState(null);
+  const [epbFile, setEpbFile] = useState();
 
   useEffect(() => {
     if (JSlipParser) {
       const contents = [];
 
       JSlipParser.forEach((relativePath, zipEntry) => {
+        console.log(relativePath)
         contents.push(zipEntry.name);
       });
 
@@ -32,7 +36,28 @@ const Myc2e = ({ walletConnection }) => {
         const result = await returnContentFromUrl('content/contents.json');
 
         if (result) {
+          // epub
+          // need to check here @waqar
+          const AllEpub = result?.c2eContents.filter(
+            (data) => data.learningResourceType === 'EPUB'
+          )?.[0];
+          if (AllEpub) {
+            const AllEpubData = await returnContentFromUrl(
+              AllEpub.url.charAt(0) === '/'
+                ? AllEpub?.url.substr(1, AllEpub?.url.length - 1)
+                : AllEpub?.url
+            );
+
+            const AllEpubData1 = await ExtractFromFile(
+              AllEpubData.file.charAt(0) === '/'
+                ? AllEpubData?.file.substr(1, AllEpubData?.file.length - 1)
+                : AllEpubData?.file
+            );
+            setEpbFile(URL.createObjectURL(AllEpubData1));
+          }
+
           // projects
+
           const AllProjects = result?.c2eContents.filter(
             (data) => data.learningResourceType === 'Project'
           );
@@ -56,7 +81,12 @@ const Myc2e = ({ walletConnection }) => {
           const allPlaylistData = [];
           for (let i = 0; i < AllPlaylist?.length; i++) {
             const playlistData = AllPlaylist[i];
-            playlistData.title = playlistData.url.split('content/')[1].split('.json')[0].replace(/-([a-z])/g, function (g) { return ' ' + g[1].toUpperCase(); });
+            playlistData.title = playlistData.url
+              .split('content/')[1]
+              .split('.json')[0]
+              .replace(/-([a-z])/g, function (g) {
+                return ' ' + g[1].toUpperCase();
+              });
 
             allPlaylistData.push(playlistData);
           }
@@ -87,10 +117,10 @@ const Myc2e = ({ walletConnection }) => {
   }, [allFiles]);
 
   useEffect(() => {
-    if (projects?.length) {
+    if (projects?.length || epbFile) {
       setModalShow(true);
     }
-  }, [projects]);
+  }, [projects, epbFile]);
 
   const returnContentFromUrl = async (url) => {
     for (var i = 0; i < allFiles.length; i++) {
@@ -105,8 +135,21 @@ const Myc2e = ({ walletConnection }) => {
     return;
   };
 
+  const ExtractFromFile = async (url) => {
+    for (var i = 0; i < allFiles.length; i++) {
+      if (allFiles[i].includes(url)) {
+        const data = await JSlipParser.files[allFiles[i]];
+        console.log(data)
+        return data;
+      }
+    }
+    return;
+  };
+
   return (
     <div className="">
+      {/* <Epub2 /> */}
+      <Epub url={epbFile} />
       {!modalShow ? (
         <div className="">
           <Home
@@ -116,6 +159,8 @@ const Myc2e = ({ walletConnection }) => {
             walletConnection={walletConnection}
           />
         </div>
+      ) : epbFile ? (
+        <Epub url={epbFile} />
       ) : (
         <Overview
           projects={projects}
