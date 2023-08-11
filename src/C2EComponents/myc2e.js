@@ -160,7 +160,7 @@ const Myc2e = ({ walletConnection }) => {
           />
         </div>
       ) : epbFile ? (
-        <Epub url={epbFile} />
+        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} />
       ) : (
         <Overview
           projects={projects}
