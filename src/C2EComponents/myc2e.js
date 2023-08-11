@@ -37,7 +37,7 @@ const Myc2e = ({ walletConnection }) => {
 
         if (result) {
           // epub
-          // need to check here @waqar
+          // need to check here waqar
           const AllEpub = result?.c2eContents.filter(
             (data) => data.learningResourceType === 'EPUB'
           )?.[0];
@@ -47,13 +47,14 @@ const Myc2e = ({ walletConnection }) => {
                 ? AllEpub?.url.substr(1, AllEpub?.url.length - 1)
                 : AllEpub?.url
             );
-
+            console.log(AllEpubData)
             const AllEpubData1 = await ExtractFromFile(
               AllEpubData.file.charAt(0) === '/'
                 ? AllEpubData?.file.substr(1, AllEpubData?.file.length - 1)
                 : AllEpubData?.file
             );
-            setEpbFile(URL.createObjectURL(AllEpubData1));
+            setEpbFile(AllEpubData1)
+            // setEpbFile(URL.createObjectURL(AllEpubData1));
           }
 
           // projects
@@ -148,8 +149,7 @@ const Myc2e = ({ walletConnection }) => {
 
   return (
     <div className="">
-      {/* <Epub2 /> */}
-      <Epub url={epbFile} />
+
       {!modalShow ? (
         <div className="">
           <Home
