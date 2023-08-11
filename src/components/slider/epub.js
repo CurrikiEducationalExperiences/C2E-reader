@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { ReactReader } from 'react-reader';
-import ep from './epub.epub';
-import CheckboxTree from 'react-checkbox-tree';
+import React, { useEffect, useState } from "react";
+import { ReactReader } from "react-reader";
+import ep from "./epub.epub";
+import CheckboxTree from "react-checkbox-tree";
+import "./style.css";
+
+import UnCheckIcon from "../../assets/images/UnCheckbox.svg";
+import CheckIcon from "../../assets/images/Checkbox.svg";
 
 const Epub = ({ url, setModalShow, activeC2E }) => {
   // And your own state logic to persist state
@@ -27,14 +31,14 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
   const transformKeys = (data) => {
     if (Array.isArray(data)) {
       return data.map((item) => transformKeys(item));
-    } else if (typeof data === 'object') {
+    } else if (typeof data === "object") {
       const newData = {};
       for (const key in data) {
         let newKey = key;
-        if (key === 'id') {
-          newKey = 'value';
-        } else if (key === 'subitems') {
-          newKey = 'children';
+        if (key === "id") {
+          newKey = "value";
+        } else if (key === "subitems") {
+          newKey = "children";
         }
         newData[newKey] = transformKeys(data[key]);
       }
@@ -56,8 +60,8 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
           Back
         </button>
       </div>
-      <div style={{ display: 'flex', gap: '20px', padding: '30px' }}>
-        <div style={{ width: '25%' }}>
+      <div style={{ display: "flex", gap: "20px", padding: "30px" }}>
+        <div style={{ width: "25%" }}>
           {meta && (
             <CheckboxTree
               nodes={meta}
@@ -65,10 +69,29 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
               expanded={expanded}
               onCheck={(checked) => setChecked(checked)}
               onExpand={(expanded) => setExpand(expanded)}
+              iconsClass="fa5"
+              icons={{
+                check: <img src={CheckIcon} alt="" />,
+                uncheck: <img src={UnCheckIcon} alt="" />,
+                halfCheck: <span className="rct-icon rct-icon-half-check" />,
+                expandClose: (
+                  <span className="rct-icon rct-icon-expand-close" />
+                ),
+                expandOpen: <span className="rct-icon rct-icon-expand-open" />,
+                expandAll: <span className="rct-icon rct-icon-expand-all" />,
+                collapseAll: (
+                  <span className="rct-icon rct-icon-collapse-all" />
+                ),
+                parentClose: (
+                  <span className="rct-icon rct-icon-parent-close" />
+                ),
+                parentOpen: <span className="rct-icon rct-icon-parent-open" />,
+                leaf: <span className="rct-icon rct-icon-leaf" />,
+              }}
             />
           )}
         </div>
-        <div style={{ height: '100vh', width: '75%' }}>
+        <div style={{ height: "100vh", width: "75%" }}>
           {ep && (
             <ReactReader
               location={location}
