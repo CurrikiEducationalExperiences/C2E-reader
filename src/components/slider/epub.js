@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ReactReader, ReactReaderStyle } from "react-reader";
-import CheckboxTree from "react-checkbox-tree";
 import "./style.css";
-
-import UnCheckIcon from "../../assets/images/UnCheckbox.svg";
-import CheckIcon from "../../assets/images/Checkbox.svg";
-import TreeView from "react-jstree-table";
 
 const ownStyles = {
   ...ReactReaderStyle,
