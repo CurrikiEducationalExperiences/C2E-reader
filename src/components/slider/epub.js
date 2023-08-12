@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { ReactReader } from "react-reader";
-import ep from "./epub.epub";
 import CheckboxTree from "react-checkbox-tree";
 import "./style.css";
 
 import UnCheckIcon from "../../assets/images/UnCheckbox.svg";
 import CheckIcon from "../../assets/images/Checkbox.svg";
+import TreeView from "react-jstree-table";
 
-const Epub = ({ url, setModalShow, activeC2E }) => {
+const Epub = ({ url, setModalShow, activeC2E, setEpbFile }) => {
   // And your own state logic to persist state
   const [location, setLocation] = useState(null);
   const [meta, setMeta] = useState();
@@ -22,11 +22,6 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
       setLocation(checked[0]);
     }
   }, [checked]);
-
-  useEffect(() => {
-    console.log(ep);
-    console.log(URL.createObjectURL(new Blob([url])));
-  }, [url]);
 
   const transformKeys = (data) => {
     if (Array.isArray(data)) {
@@ -47,6 +42,30 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
       return data;
     }
   };
+
+  const jstreeConfig = function(data) {
+    return {
+      core: {
+        data: data,
+        themes: {
+          icons: false,
+        },
+      }
+    };
+  }
+
+  const makeTOCDataRecursive = function(toc) {
+    var toc_data = [];
+    toc.forEach(function (chapter) {
+      var children = [];
+      if (chapter.subitems.length > 0) {
+        children = makeTOCDataRecursive(chapter.subitems);
+      }
+      toc_data.push({ text: chapter.label, href: chapter.href, children: children });
+    });
+    return toc_data;
+  };
+
   return (
     <>
       <div className="sub-heading-wrapper">
@@ -55,6 +74,7 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
         <button
           onClick={() => {
             setModalShow(false);
+            setEpbFile(null);
           }}
         >
           Back
@@ -63,6 +83,7 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
       <div style={{ display: "flex", gap: "20px", padding: "30px" }}>
         <div style={{ width: "25%" }}>
           {meta && (
+            /* 
             <CheckboxTree
               nodes={meta}
               checked={checked}
@@ -89,17 +110,19 @@ const Epub = ({ url, setModalShow, activeC2E }) => {
                 leaf: <span className="rct-icon rct-icon-leaf" />,
               }}
             />
+            */
+            <TreeView treeData={meta} />
           )}
         </div>
         <div style={{ height: "100vh", width: "75%" }}>
-          {ep && (
+          {(
             <ReactReader
               location={location}
               locationChanged={locationChanged}
-              url={ep}
+              url={url}
               showToc={false}
               getRendition={(rendition) => {
-                setMeta(transformKeys(rendition?.book?.navigation?.toc));
+                setMeta(jstreeConfig(makeTOCDataRecursive (rendition?.book?.navigation?.toc)));
                 // setMeta(rendition);
               }}
             />

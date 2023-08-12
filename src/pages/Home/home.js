@@ -23,7 +23,8 @@ const Home = ({
   const [apiProject, setapiProject] = useState();
   const [query, setQuery] = useState('');
   const user = walletConnection.email;
-  const apiBaseUrl = 'https://c2e-api.curriki.org/api/v1/c2e/decrypt';
+  //const apiBaseUrl = 'https://c2e-api.curriki.org/api/v1/c2e/decrypt';
+  const apiBaseUrl = 'https://c2e-api.curriki.org/';
 
   const listProjects = async () => {
     const allProjects = await fetch(

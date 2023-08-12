@@ -19,6 +19,7 @@
     "react-checkbox-tree": "^1.8.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
+    "react-jstree-table": "^0.0.24",
     "react-particles": "^2.9.3",
     "react-reader": "^1.2.1",
     "react-router-dom": "^5.3.0",
