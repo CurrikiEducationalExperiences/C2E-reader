@@ -45,7 +45,6 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
       </div>
       <div style={{ display: "flex", gap: "20px", padding: "30px" }}>
         <div id="reader-container" style={{ height: "100vh", width: "100%" }}>
-          {epubLoaded.toString()}
           {(
             <ReactReader
               epubOptions={{
