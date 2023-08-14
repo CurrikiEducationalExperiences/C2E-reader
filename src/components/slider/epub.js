@@ -104,7 +104,7 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
                               id: "https://c2e.curriki.org/" + c2eId,
                               definition: {
                                 name: {
-                                  "en-US": contents.document.title
+                                  "en-US": activeC2E?.c2eMetadata?.general?.title
                                 },
                                 extensions: {}
                               }
