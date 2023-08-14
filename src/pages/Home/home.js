@@ -135,57 +135,59 @@ const Home = ({
               ref={inp}
               type="file"
               style={{ display: 'none' }}
-              // onChange={async (e) => {
-              //   if (e.target.files.length === 0) return;
-              //   setLoader(true);
-              //   var formdata = new FormData();
-              //   formdata.append('user', user);
-              //   formdata.append('c2e', e.target.files[0]);
-              //   var requestOptions = {
-              //     method: 'POST',
+              onChange={async (e) => {
+                if (e.target.files.length === 0) return;
+                setLoader(true);
+                var formdata = new FormData();
+                formdata.append('user', user);
+                formdata.append('c2e', e.target.files[0]);
+                var requestOptions = {
+                  method: 'POST',
 
-              //     body: formdata,
-              //     redirect: 'follow',
-              //   };
+                  body: formdata,
+                  redirect: 'follow',
+                };
 
-              //   fetch(
-              //     apiBaseUrl+'api/v1/c2e/decrypt',
-              //     requestOptions
-              //   )
-              //     .then(async (response) => {
-              //       console.log(response);
-              //       if (response.status !== 200) {
-              //         response.json().then((e) => setError(e.error)).catch((e) => {
-              //           console.log('Error uploading C2E', e);
-              //           setError('Error processing C2E. Make sure your file matches the latest C2E standard format.');
-              //         });
-              //         setLoader(false);
-              //         return;
-              //       }
-              //       response.arrayBuffer().then(async (data) => {
-              //         setLoader(false);
-              //         const blob = new Blob([data], {
-              //           type: 'application/octet-stream',
-              //         });
+                fetch(
+                  apiBaseUrl+'api/v1/c2e/decrypt',
+                  requestOptions
+                )
+                  .then(async (response) => {
+                    console.log(response);
+                    if (response.status !== 200) {
+                      response.json().then((e) => setError(e.error)).catch((e) => {
+                        console.log('Error uploading C2E', e);
+                        setError('Error processing C2E. Make sure your file matches the latest C2E standard format.');
+                      });
+                      setLoader(false);
+                      return;
+                    }
+                    response.arrayBuffer().then(async (data) => {
+                      setLoader(false);
+                      const blob = new Blob([data], {
+                        type: 'application/octet-stream',
+                      });
 
-              //         const loadzip = await JSZip.loadAsync(blob);
+                      const loadzip = await JSZip.loadAsync(blob);
 
-              //         loadzip.forEach(async (relativePath, zipEntry) => {
-              //           if (zipEntry.name.includes('.c2e')) {
-              //             const loadzip1 = await JSZip.loadAsync(
-              //               zipEntry.async('blob')
-              //             );
+                      loadzip.forEach(async (relativePath, zipEntry) => {
+                        if (zipEntry.name.includes('.c2e')) {
+                          const loadzip1 = await JSZip.loadAsync(
+                            zipEntry.async('blob')
+                          );
 
-              //             setJSlipParser(loadzip1);
-              //           }
-              //         });
-              //       });
-              //     })
-              //     .catch((error) => {
-              //       setError(error);
-              //       setLoader(false);
-              //     });
-              // }}
+                          setJSlipParser(loadzip1);
+                        }
+                      });
+                    });
+                  })
+                  .catch((error) => {
+                    setError(error);
+                    setLoader(false);
+                  });
+              }}
+              
+              /* 
               onChange={async (e) => {
                 const loadzip = await JSZip.loadAsync(e.target.files[0]);
                 console.log(loadzip);
@@ -199,6 +201,7 @@ const Home = ({
                 //   setJSlipParser(loadzip1);
                 // });
               }}
+               */
             />
           </div>
           {apiProject?.map((data) => {

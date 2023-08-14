@@ -14,6 +14,7 @@ const Myc2e = ({ walletConnection }) => {
   const [JSlipParser, setJSlipParser] = useState(null);
   const [allFiles, setAllFIles] = useState(null);
   const [epbFile, setEpbFile] = useState(null);
+  const [c2eResource, setC2eResource] = useState(null);
 
   useEffect(() => {
     if (JSlipParser) {
@@ -54,6 +55,10 @@ const Myc2e = ({ walletConnection }) => {
                 : AllEpubData?.file
             );
             
+            
+            const resoruces = c2edata?.c2eContainer?.filter(x => x['@id'] === 'c2ens:c2eResources');
+            const resoruce = Array.isArray(resoruces) && resoruces.length > 0 ? resoruces[0]?.c2eResources.find(r => r.url === '/'+AllEpubData1.unsafeOriginalName) : null;
+            setC2eResource(resoruce);
             const epubData = await AllEpubData1.async('uint8array');
             setEpbFile(epubData)
           }
@@ -161,7 +166,7 @@ const Myc2e = ({ walletConnection }) => {
           />
         </div>
       ) : epbFile ? (
-        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} setEpbFile={setEpbFile} />
+        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} setEpbFile={setEpbFile} c2eResource={c2eResource} />
       ) : (
         <Overview
           projects={projects}
