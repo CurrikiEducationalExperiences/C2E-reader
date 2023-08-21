@@ -116,14 +116,25 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
                             "@type": "https://schema.org/DigitalDocument",
                             "https://schema.org/identifier" : {
                               "@type": "https://schema.org/PropertyValue",
-                                "https://schema.org/propertyID": "ISBN",
-                                "https://schema.org/value":  "ISBN: 978-1-119-86164-5; 978-1-119-86165-2 (ebk); 978-1-119-86168-3 (ebk)"
+                                "https://schema.org/propertyID": c2eResource.identifier.propertyID,
+                                "https://schema.org/value":  c2eResource.identifier.value
                               },
                               "https://schema.org/fileFormat": c2eResource.fileFormate,
                               "https://schema.org/url": c2eResource.url
                           };
-                          
                           statement.object.definition.extensions["https://c2e.curriki.org/xAPI/c2eResource"] = c2eResourceXapi;
+                          
+                          if ('subjectOf' in activeC2E?.c2eMetadata) {
+                            const c2eSubjectOfXapi = {
+                              ...JSON.parse(
+                                JSON.stringify(activeC2E?.c2eMetadata?.subjectOf)
+                                .replaceAll('c2ens:', 'https://c2e.curriki.org/')
+                                .replaceAll('sdons:', 'https://schema.org/')
+                              )
+                            };
+                            statement.object.definition.extensions["https://c2e.curriki.org/xAPI/c2eSubjectOf"] = c2eSubjectOfXapi;  
+                          }
+
                           tincan.sendStatement(statement);
                         }
                   });
