@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Myc2e from './C2EComponents/myc2e';
+import Myc2ePreview from './C2EComponents/myc2e-preview';
 // import Home from './pages/Home/home';
 // import Overview from './pages/Overview/overview';
 import Login from './pages/login';
@@ -62,7 +63,7 @@ function App() {
           window.location.href = '/';
         }
       } else {
-        if (!window.location.pathname?.includes('login')) {
+        if (!window.location.pathname?.includes('login') && !window.location.pathname?.includes('preview')) {
           window.location.href = '/login';
         }
       }
@@ -78,6 +79,12 @@ function App() {
             </div>
             <Myc2e walletConnection={walletConnection} />
           </ProtectedRoute>
+        </Route>
+        <Route exact path="/preview">
+          <div className="header-container">
+            <Header web3auth={web3auth} walletConnection={walletConnection} />
+          </div>
+          <Myc2ePreview walletConnection={walletConnection} />
         </Route>
         <Route exact path="/login">
             <Login web3auth={web3auth} />
