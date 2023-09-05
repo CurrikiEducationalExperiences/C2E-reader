@@ -19,6 +19,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   PROJECT_NAME: c2e
   ECR_USERNAME: ${{secrets.ECR_USERNAME}}
+  ECR_ACCOUNT: ${{secrets.ECR_ACCOUNT}}
   CONTAINER_IMAGE: c2e-reader:${{ github.sha }}
   AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
   EKS_CLUSTER_NAME: ${{secrets.EKS_CLUSTER_NAME}}
@@ -38,7 +39,7 @@ jobs:
     - name: Setup ECR
       run: |
         # Login to AWS ECR
-        aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username $ECR_USERNAME --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+        aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username $ECR_USERNAME --password-stdin $ECR_ACCOUNT
 
     - name: Build and tag the image
       run: |
