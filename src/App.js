@@ -20,6 +20,8 @@ function App() {
   const [session, setSession] = useState();
 
   useEffect(() => {
+    if (window.location.pathname?.includes('preview')) return;
+
     (async () => {
       const web3auth = new Web3Auth({
         clientId:
