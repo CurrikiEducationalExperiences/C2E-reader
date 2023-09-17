@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './C2EComponents/header';
 export const UserContext = createContext(null);
 function App() {
-  const OAuthClientId = '1033463348275-lsniv7sgkmhdfsdk092bbhln9s9ld14k.apps.googleusercontent.com';
+  const OAuthClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const token = localStorage.getItem('oAuthToken');
   const user = token ? jwt_decode(token) : null;
 
