@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ReactReader, ReactReaderStyle } from "react-reader";
+import { useHistory  } from 'react-router-dom';
 import "./style.css";
 
 const ownStyles = {
@@ -21,9 +22,9 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
   const [location, setLocation] = useState(null);
   const renditionRef = useRef(null);
   const tocRef = useRef(null);
-  const [epubLoaded, setEpubLoaded] = useState(false);
   const isPreview = activeC2E.creativeWorkStatus === 'preview' ? true : false;
   const [timer, setTimer] = useState(90);
+  const history = useHistory();
 
   const locationChanged = (epubcifi) => {
     // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
@@ -48,6 +49,7 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
           onClick={() => {
             setModalShow(false);
             setEpbFile(null);
+            history.push('/');
           }}
         >
           Back
@@ -67,7 +69,7 @@ const Epub = ({ url, setModalShow, activeC2E, setEpbFile, c2eResource }) => {
         {(isPreview && timer < 1) &&
           <p>Preview time is up. Please purchase a license to experience the full content</p>
         }        
-        {(isPreview && timer > 0) && 
+        {((isPreview && timer > 0) || !isPreview) && 
           <div id="reader-container" style={{ height: "100vh", width: "100%" }}>
             {(
               <ReactReader

@@ -700,6 +700,13 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   padding: 0 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-conrainer .google-login-button {
+  align-self: center;
+  justify-self: center;
 }
 
 .login-conrainer .login-form {

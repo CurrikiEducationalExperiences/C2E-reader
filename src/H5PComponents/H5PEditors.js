@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 //import h5p1 from '../test.json'
 
 const H5PEditor = ({ h5p }) => {

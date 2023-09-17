@@ -1,39 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import C2ELogo from '../assets/images/c2e-logo-white.svg';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import { UserContext } from '../App';
+import { googleLogout } from '@react-oauth/google'; 
 
-const Header = ({ web3auth, walletConnection }) => {
-  const logout = async () => {
-    if (!web3auth) {
-      console.log('provider not initialized yet');
-      return;
-    }
-
-    await web3auth.logout();
-    history.push('/login');
-  };
-  const history = useHistory();
+const Header = () => {
+  const user = useContext(UserContext);
 
   return (
     <div className="header">
       <img src={C2ELogo} alt="logo" className="header-logo" />
-      {walletConnection ? (
+      {user && (
         <div className="login-user">
           <div className="user-info">
-            <img src={walletConnection?.profileImage} alt="" />
-            {/* <h2>{walletConnection?.name}</h2> */}
+            <img src={user.picture} alt="" />
+            {/* <h2>{user.name}</h2> */}
           </div>
           <button
             className="login"
             onClick={() => {
-              logout();
+              googleLogout();
+              localStorage.removeItem('oAuthToken');
+              window.location.reload();
             }}
           >
             Logout
           </button>
         </div>
-      ) : (
-        ''
       )}
     </div>
   );

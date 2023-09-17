@@ -1,36 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
-
-import Dropdown from 'react-bootstrap/Dropdown';
 import searchIcon from '../../assets/images/icons/search1.png';
 import addIcon from '../../assets/images/icons/add-icon.svg';
-import NavigationIcon from '../../assets/images/icons/navigation-icon.svg';
 import DeleteIcon from '../../assets/images/icons/delete-icon.svg';
-
 import JSZip from 'jszip';
-
 import Slider from '../../components/slider';
+import { UserContext } from '../../App';
 
-const Home = ({
-  walletConnection,
-  setModalShow,
-  setActiveC2e,
-  setJSlipParser,
-}) => {
+const Home = ({setJSlipParser}) => {
+  const user = useContext(UserContext);
   const inp = useRef();
   const [loader, setLoader] = useState();
   const [error, setError] = useState();
   const [apiProject, setapiProject] = useState();
   const [query, setQuery] = useState('');
-  const user = walletConnection.email;
-  //const apiBaseUrl = 'https://c2e-api.curriki.org/api/v1/c2e/decrypt';
   const apiBaseUrl = 'https://c2e-api.curriki.org/';
 
   const listProjects = async () => {
     const allProjects = await fetch(
       apiBaseUrl +
         'api/v1/c2e/reader/listc2e?' +
-        new URLSearchParams({ user, query })
+        new URLSearchParams({ user: user.email, query })
     );
     const result = await allProjects.json();
     setapiProject(result?.projects);
@@ -57,7 +47,7 @@ const Home = ({
 
   const deleteC2E = async (data) => {
     const params = {
-      user,
+      user: user.email,
       c2eid: data.id,
     };
     fetch(apiBaseUrl + 'api/v1/c2e/reader/deletec2e', {
@@ -94,7 +84,7 @@ const Home = ({
               <span>Hello,</span>
 
               <br />
-              {walletConnection?.name}
+              {user.name}
             </h3>
           </div>
           <div className="search-wrapper">
@@ -139,7 +129,7 @@ const Home = ({
                 if (e.target.files.length === 0) return;
                 setLoader(true);
                 var formdata = new FormData();
-                formdata.append('user', user);
+                formdata.append('user', user.email);
                 formdata.append('c2e', e.target.files[0]);
                 var requestOptions = {
                   method: 'POST',
