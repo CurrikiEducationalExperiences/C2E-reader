@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import HomePreview from '../pages/Preview/home-preview';
 import Overview from '../pages/Overview/overview';
-import Epub2 from '../components/slider/epub2';
-
 import Epub from '../components/slider/epub';
+
 const Myc2ePreview = ({ walletConnection }) => {
+  console.log('preview init');
   const [modalShow, setModalShow] = React.useState(false);
   const [activeC2E, setActiveC2e] = useState(false);
   const [projects, setProjects] = useState(null);
@@ -155,7 +155,6 @@ const Myc2ePreview = ({ walletConnection }) => {
 
   return (
     <div className="">
-
       {!modalShow ? (
         <div className="">
           <HomePreview

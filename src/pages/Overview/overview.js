@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Accordion, Tab, Tabs } from 'react-bootstrap';
 import BannerImg from '../../assets/images/s2e-banner.png';
-import c2e from '../../assets/images/c2e.png';
 import H5PEditor from '../../H5PComponents/H5PEditors';
 import './style.css';
 
