@@ -14,6 +14,7 @@ const Home = ({ setJSlipParser }) => {
   const [loader, setLoader] = useState();
   const [error, setError] = useState();
   const [apiProject, setapiProject] = useState();
+  const [apiProject1, setapiProject1] = useState();
   const [query, setQuery] = useState('');
   const apiBaseUrl = 'https://c2e-provider-api.curriki.org/';
 
@@ -100,6 +101,22 @@ const Home = ({ setJSlipParser }) => {
     listProjects();
   }, [query]);
 
+  useEffect(() => {
+    if (apiProject?.length) {
+      apiProject?.sort((a, b) => {
+        if (a.cee.subjectOf < b.cee.subjectOf) return -1;
+        if (a.cee.subjectOf > b.cee.subjectOf) return 1;
+        // If "subjectOf" is the same, sort by "title"
+        if (a.cee.title < b.cee.title) return -1;
+        if (a.cee.title > b.cee.title) return 1;
+        return 0;
+      });
+       console.log(apiProject)
+      // Iterate through the sorted array and group chapters under their respective books
+      setapiProject1(apiProject)
+    }
+  }, [apiProject]);
+
   const tooltip = (
     <Tooltip id="tooltip">
       <strong>Holy guacamole!</strong> Check this info.
@@ -152,7 +169,7 @@ const Home = ({ setJSlipParser }) => {
         )}
         <br />
         <div className="c2e-cards">
-          {apiProject?.map((data) => {
+          {apiProject1?.map((data) => {
             return (
               <div className="c2e-main-card">
                 <div
