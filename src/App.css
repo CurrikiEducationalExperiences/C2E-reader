@@ -448,12 +448,33 @@ body {
 }
 .c2e-cards .add-img-card .card-text {
   color: #fff;
-  text-align: center;
+
   font-size: 14px;
   font-family: Rubik;
   line-height: 20px;
   margin: 0;
 }
+
+.c2e-cards .add-img-card .flexer {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  gap:5px;
+  justify-content: space-between;
+}
+
+.c2e-cards .add-img-card .flexer div {
+  background-color: rgb(29, 121, 163);
+  width:25px;
+  height:25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+  flex-shrink: 0;
+}
+
 .c2e-cards .add-img-card .card-text:hover {
   color: #eca41d;
   text-decoration: underline;
@@ -479,7 +500,7 @@ body {
 .banner-img {
   display: flex;
   width: 100%;
-    justify-content: center;
+  justify-content: center;
   align-items: center;
   border-radius: 8px;
   border: 1px solid #f1f1f1;
@@ -728,7 +749,7 @@ body {
   font-size: 48px !important;
   font-family: Rubik;
   font-weight: 700;
- line-height: 50px !important;
+  line-height: 50px !important;
   margin: 40px 0 0;
 }
 .login-conrainer .login-banner .login-banner-heading span {
@@ -748,7 +769,7 @@ body {
   line-height: 36px;
   font-family: Rubik;
   font-weight: 700;
- margin-top: 150px;
+  margin-top: 150px;
   margin-bottom: 16px;
 }
 .login-conrainer .login-banner .sub-banner-alert-heading h1 span,
@@ -876,10 +897,8 @@ body {
   color: #fff;
 }
 
-
 .overview-wrapper {
   min-height: calc(100vh - 94px);
-
 }
 
 .accordion-header {
