@@ -154,17 +154,18 @@ const Home = ({ setJSlipParser }) => {
         <div className="c2e-cards">
           {apiProject?.map((data) => {
             return (
-              <div
-                key={data.id}
-                className="add-img-card "
-                style={{
-                  backgroundImage: `url(${defaultImage})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                }}
-              >
-                {/* <div className="add-more-img">
+              <div className="c2e-main-card">
+                <div
+                  key={data.id}
+                  className="add-img-card "
+                  style={{
+                    backgroundImage: `url(${defaultImage})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                  }}
+                >
+                  {/* <div className="add-more-img">
                   <img
                     role="button"
                     src={DeleteIcon}
@@ -174,33 +175,25 @@ const Home = ({ setJSlipParser }) => {
                     }}
                   />
                 </div> */}
-                <div role="button" className="card-detail">
-                  <h5 className="card-text flexer ">
-                    {data.cee?.subjectOf}
-                    {data.cee?.description !== 'No Description' && data.cee?.description && (
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="tooltip">
-                            {data.cee?.description}
-                          </Tooltip>
-                        }
-                      >
-                        <div className>i</div>
-                      </OverlayTrigger>
-                    )}
-                  </h5>
-                  {/* <p className="">13 Jan 2023</p> */}
+                  <div role="button" className="card-detail">
+                    {data.cee?.description !== 'No Description' &&
+                      data.cee?.description && (
+                        <OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="tooltip">
+                              {data.cee?.description}
+                            </Tooltip>
+                          }
+                        >
+                          <div className="flexer">i</div>
+                        </OverlayTrigger>
+                      )}
+                  </div>
                 </div>
-                <div
-                  role="button"
-                  onClick={() => {
-                    getC2EDownload(data?.license?.licenseKey);
-                  }}
-                  className="card-detail"
-                >
-                  <h5 className="card-text">{data.cee?.title}</h5>
-                  {/* <p className="">13 Jan 2023</p> */}
+                <div className="meta">
+                  <h3>{data.cee?.subjectOf}</h3>
+                  <p>{data.cee?.title}</p>
                 </div>
               </div>
             );

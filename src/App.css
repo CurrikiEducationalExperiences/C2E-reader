@@ -367,10 +367,34 @@ body {
 
 .c2e-cards {
   display: flex;
-  align-items: center;
+
   flex-wrap: wrap;
   gap: 12px;
 }
+
+.c2e-main-card {
+  border:1px solid #ccc;
+  box-shadow: 0px 0px 5px 3px #cccc;
+  width: 255px;
+  border-radius: 12px;
+}
+
+
+
+.c2e-main-card .meta {
+  padding: 10px;
+}
+
+.c2e-main-card .meta h3 {
+  font-size: 20px;
+}
+
+.c2e-main-card .meta p {
+  color: #f8af2c;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .c2e-cards .add-card {
   display: flex;
   width: 225px;
@@ -400,7 +424,7 @@ body {
   justify-content: space-between;
   gap: 8px;
   border-radius: 12px;
-  width: 225px;
+  width: 100%;
   height: 140px;
   position: relative;
   overflow: hidden;
@@ -412,11 +436,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
+  /* background: linear-gradient(
     0deg,
     rgb(0, 0, 0, 56%) 0%,
     rgb(0, 0, 0, 64%) 100%
-  );
+  ); */
 }
 
 .c2e-cards .add-img-card .dropdown-icon {
@@ -463,8 +487,8 @@ body {
   justify-content: space-between;
 }
 
-.c2e-cards .add-img-card .flexer div {
-  background-color: rgb(29, 121, 163);
+.c2e-cards .add-img-card .flexer  {
+  background-color: rgb(171 210 228);
   width:25px;
   height:25px;
   border-radius: 50%;
