@@ -17,7 +17,7 @@ function App() {
   const decodedToken = token ? jwt_decode(token) : null;
   var user = null;
 
-  if ((Date.now() / 1000 ) > (decodedToken.exp - 1800) || !decodedToken) {
+  if (!decodedToken || (Date.now() / 1000 ) > (decodedToken.exp - 1800)) {
     localStorage.removeItem('oAuthToken');
   } else {
     user = decodedToken;
