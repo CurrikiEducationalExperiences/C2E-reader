@@ -928,3 +928,7 @@ body {
 .accordion-header {
   margin-bottom: 11px !important;
 }
+
+.c2e-title {
+  cursor: pointer;
+}

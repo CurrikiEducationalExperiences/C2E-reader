@@ -219,7 +219,7 @@ const Home = ({ setJSlipParser }) => {
                 </div>
                 <div className="meta">
                   <h3>{data.cee?.subjectOf}</h3>
-                  <p onClick={() => {
+                  <p className="c2e-title" onClick={() => {
                     getC2E(data?.cee.id);
                   }}>
                     {data.cee?.title}
