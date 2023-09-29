@@ -1,8 +1,8 @@
 # build.yml
 on:
-  pull_request:
-    paths:
-    - "**"
+  # pull_request:
+  #   paths:
+  #   - "**"
   push:
     paths:
     - "**"
@@ -24,6 +24,7 @@ env:
   AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
   EKS_CLUSTER_NAME: ${{secrets.EKS_CLUSTER_NAME}}
   COMMON_NAME: ${{secrets.COMMON_NAME}}
+  ENV_JS: ${{secrets.ENV_JS}}
   # MULTIPLE_TG: ${{secrets.MULTIPLE_TG}}
   # CERTIFICATE_ARN: ${{secrets.CERTIFICATE_ARN}}
 
@@ -44,6 +45,7 @@ jobs:
     - name: Build and tag the image
       run: |
         # Build and tag the image
+        echo "$ENV_JS" > .env
         docker build \
           -t $CONTAINER_IMAGE \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./
