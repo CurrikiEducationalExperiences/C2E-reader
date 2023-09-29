@@ -21,7 +21,7 @@ const Home = ({ setJSlipParser }) => {
   const listProjects = async () => {
     const allProjects = await fetch(apiBaseUrl + 'c2e-licenses/buyer', {
       method: 'POST',
-      body: JSON.stringify({ email: user.email }),
+      body: JSON.stringify({ token: localStorage.getItem('oAuthToken') }),
       headers: {
         'Content-Type': 'application/json',
         // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -32,8 +32,15 @@ const Home = ({ setJSlipParser }) => {
     setapiProject(result);
   };
 
-  const getC2E = (data) => {
-    fetch(data.c2e_url_decoded).then((response) => {
+  const getC2E = (ceeId) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ceeId: ceeId, token: localStorage.getItem('oAuthToken'), decrypt: true})
+    };
+    fetch(`${apiBaseUrl}c2e/licensed`, options).then((response) => {
       response.arrayBuffer().then(async (data) => {
         setLoader(false);
         const blob = new Blob([data], {
@@ -42,7 +49,9 @@ const Home = ({ setJSlipParser }) => {
 
         const loadzip = await JSZip.loadAsync(blob);
         loadzip.forEach(async (relativePath, zipEntry) => {
-          if (zipEntry.name.includes('.c2e')) {
+          if (zipEntry.name.includes('.html')) {
+            setJSlipParser(loadzip);
+          } else if (zipEntry.name.includes('.c2e')) {
             const loadzip1 = await JSZip.loadAsync(zipEntry.async('blob'));
             setJSlipParser(loadzip1);
           }
@@ -210,7 +219,11 @@ const Home = ({ setJSlipParser }) => {
                 </div>
                 <div className="meta">
                   <h3>{data.cee?.subjectOf}</h3>
-                  <p>{data.cee?.title}</p>
+                  <p onClick={() => {
+                    getC2E(data?.cee.id);
+                  }}>
+                    {data.cee?.title}
+                  </p>
                 </div>
               </div>
             );

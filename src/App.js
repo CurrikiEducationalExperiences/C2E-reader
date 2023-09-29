@@ -14,7 +14,14 @@ export const UserContext = createContext(null);
 function App() {
   const OAuthClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const token = localStorage.getItem('oAuthToken');
-  const user = token ? jwt_decode(token) : null;
+  const decodedToken = token ? jwt_decode(token) : null;
+  var user = null;
+
+  if ((Date.now() / 1000 ) > (decodedToken.exp - 1800) || !decodedToken) {
+    localStorage.removeItem('oAuthToken');
+  } else {
+    user = decodedToken;
+  }
 
   return (
     <GoogleOAuthProvider clientId={OAuthClientId}>
