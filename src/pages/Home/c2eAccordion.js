@@ -6,7 +6,7 @@ import defaultImage from "../../assets/images/C2E-Image-15.jpg";
 const C2eAccordion = ({ bookData, getC2E }) => {
   const filterBook = new Set(bookData?.map((i) => i?.cee.subjectOf));
   return (
-    <Accordion className="book-accordion" defaultActiveKey="0">
+    <Accordion className="book-accordion" defaultActiveKey={0}>
       {Array.from(filterBook)?.map((item, index) => (
         <Accordion.Item eventKey={index}>
           <Accordion.Header key={index}>
