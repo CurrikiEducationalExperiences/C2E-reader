@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
-import { Alert, Spinner, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import searchIcon from '../../assets/images/icons/search1.png';
-import addIcon from '../../assets/images/icons/add-icon.svg';
-import DeleteIcon from '../../assets/images/icons/delete-icon.svg';
-import defaultImage from '../../assets/images/C2E-Image-15.jpg';
-import JSZip from 'jszip';
-import Slider from '../../components/slider';
-import { UserContext } from '../../App';
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { Alert, Spinner, OverlayTrigger, Tooltip } from "react-bootstrap";
+import searchIcon from "../../assets/images/icons/search1.png";
+import addIcon from "../../assets/images/icons/add-icon.svg";
+import DeleteIcon from "../../assets/images/icons/delete-icon.svg";
+import defaultImage from "../../assets/images/C2E-Image-15.jpg";
+import JSZip from "jszip";
+import Slider from "../../components/slider";
+import { UserContext } from "../../App";
+import C2eAccordion from "./c2eAccordion";
 
 const Home = ({ setJSlipParser }) => {
   const user = useContext(UserContext);
@@ -15,15 +16,18 @@ const Home = ({ setJSlipParser }) => {
   const [error, setError] = useState();
   const [apiProject, setapiProject] = useState();
   const [apiProject1, setapiProject1] = useState();
-  const [query, setQuery] = useState('');
-  const apiBaseUrl = 'https://c2e-provider-api.curriki.org/';
+
+  const [query, setQuery] = useState("");
+  const apiBaseUrl = "https://c2e-provider-api.curriki.org/";
+
+  console.log("apiProject1", apiProject1);
 
   const listProjects = async () => {
-    const allProjects = await fetch(apiBaseUrl + 'c2e-licenses/buyer', {
-      method: 'POST',
-      body: JSON.stringify({ token: localStorage.getItem('oAuthToken') }),
+    const allProjects = await fetch(apiBaseUrl + "c2e-licenses/buyer", {
+      method: "POST",
+      body: JSON.stringify({ token: localStorage.getItem("oAuthToken") }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
@@ -36,23 +40,27 @@ const Home = ({ setJSlipParser }) => {
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ceeId: ceeId, token: localStorage.getItem('oAuthToken'), decrypt: true})
+      body: JSON.stringify({
+        ceeId: ceeId,
+        token: localStorage.getItem("oAuthToken"),
+        decrypt: true,
+      }),
     };
     fetch(`${apiBaseUrl}c2e/licensed`, options).then((response) => {
       response.arrayBuffer().then(async (data) => {
         setLoader(false);
         const blob = new Blob([data], {
-          type: 'application/octet-stream',
+          type: "application/octet-stream",
         });
 
         const loadzip = await JSZip.loadAsync(blob);
         loadzip.forEach(async (relativePath, zipEntry) => {
-          if (zipEntry.name.includes('.html')) {
+          if (zipEntry.name.includes(".html")) {
             setJSlipParser(loadzip);
-          } else if (zipEntry.name.includes('.c2e')) {
-            const loadzip1 = await JSZip.loadAsync(zipEntry.async('blob'));
+          } else if (zipEntry.name.includes(".c2e")) {
+            const loadzip1 = await JSZip.loadAsync(zipEntry.async("blob"));
             setJSlipParser(loadzip1);
           }
         });
@@ -63,20 +71,20 @@ const Home = ({ setJSlipParser }) => {
   const getC2EDownload = (licenseKey) => {
     fetch(`${apiBaseUrl}/c2e/licensed`, {
       // Prepend the host
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({ licenseKey: licenseKey }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     })
       .then((response) => response.blob())
       .then((blob) => {
         // Create a temporary URL for the binary data
         const url = window.URL.createObjectURL(blob); // Create a temporary <a> element to trigger the download
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
-        a.download = licenseKey + '.c2e'; // Change the filename as needed
-        a.style.display = 'none';
+        a.download = licenseKey + ".c2e"; // Change the filename as needed
+        a.style.display = "none";
         document.body.appendChild(a);
 
         // Trigger the download and cleanup
@@ -85,8 +93,8 @@ const Home = ({ setJSlipParser }) => {
         document.body.removeChild(a);
       })
       .catch((error) => {
-        console.error('Error:', error);
-        alert('License activation failed.');
+        console.error("Error:", error);
+        alert("License activation failed.");
       });
   };
 
@@ -95,12 +103,12 @@ const Home = ({ setJSlipParser }) => {
       user: user.email,
       c2eid: data.id,
     };
-    fetch(apiBaseUrl + 'api/v1/c2e/reader/deletec2e', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    fetch(apiBaseUrl + "api/v1/c2e/reader/deletec2e", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     }).then((r) => {
-      if (r.status !== 200) setError('Error deleting, please try again.');
+      if (r.status !== 200) setError("Error deleting, please try again.");
 
       listProjects();
     });
@@ -120,9 +128,9 @@ const Home = ({ setJSlipParser }) => {
         if (a.cee.title > b.cee.title) return 1;
         return 0;
       });
-       console.log(apiProject)
+      console.log(apiProject);
       // Iterate through the sorted array and group chapters under their respective books
-      setapiProject1(apiProject)
+      setapiProject1(apiProject);
     }
   }, [apiProject]);
 
@@ -139,10 +147,10 @@ const Home = ({ setJSlipParser }) => {
       <div className="main-container">
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
           }}
         >
           <div className="heading">
@@ -176,8 +184,13 @@ const Home = ({ setJSlipParser }) => {
             </Alert>
           </div>
         )}
+
         <br />
-        <div className="c2e-cards">
+
+        <C2eAccordion bookData={apiProject1} />
+
+        <br />
+        {/* <div className="c2e-cards">
           {apiProject1?.map((data) => {
             return (
               <div className="c2e-main-card">
@@ -186,23 +199,14 @@ const Home = ({ setJSlipParser }) => {
                   className="add-img-card "
                   style={{
                     backgroundImage: `url(${defaultImage})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
                   }}
                 >
-                  {/* <div className="add-more-img">
-                  <img
-                    role="button"
-                    src={DeleteIcon}
-                    alt="delete"
-                    onClick={() => {
-                      deleteC2E(data?.cee);
-                    }}
-                  />
-                </div> */}
+                
                   <div role="button" className="card-detail">
-                    {data.cee?.description !== 'No Description' &&
+                    {data.cee?.description !== "No Description" &&
                       data.cee?.description && (
                         <OverlayTrigger
                           placement="top"
@@ -219,16 +223,19 @@ const Home = ({ setJSlipParser }) => {
                 </div>
                 <div className="meta">
                   <h3>{data.cee?.subjectOf}</h3>
-                  <p className="c2e-title" onClick={() => {
-                    getC2E(data?.cee.id);
-                  }}>
+                  <p
+                    className="c2e-title"
+                    onClick={() => {
+                      getC2E(data?.cee.id);
+                    }}
+                  >
                     {data.cee?.title}
                   </p>
                 </div>
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </>
   );
