@@ -979,7 +979,7 @@ body {
 .book-accordion .accordion-item .accordion-body .chapter-detail {
   width: 100%;
   padding: 16px 16px 16px 66px;
-  border-bottom: 2px solid #ddd;
+  /* border-bottom: 2px solid #ddd; */
 }
 
 .book-accordion .accordion-item .accordion-body .chapter-detail:last-child {
@@ -988,7 +988,6 @@ body {
 
 .book-accordion .accordion-item .accordion-body .chapter-detail h1 {
   color: #084892;
-  font-family: Rubik;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -997,10 +996,10 @@ body {
   width: fit-content;
 }
 
-.book-accordion .accordion-item .accordion-body {
+/* .book-accordion .accordion-item .accordion-body {
   max-height: 400px;
   overflow-y: auto;
-}
+} */
 .book-accordion .accordion-item .accordion-body .chapter-detail h1:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -1008,10 +1007,27 @@ body {
 
 .book-accordion .accordion-item .accordion-body .chapter-detail p {
   color: #000;
-  font-family: Open Sans;
   font-size: 16px;
   font-style: normal;
   font-weight: 300;
   line-height: 24px;
   margin: 0;
+}
+
+.read-more-btn {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--blue-b-1, #084892);
+  text-align: center;
+  padding: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  margin-left: 8px;
+}
+
+.expand svg {
+  transform: rotate(180deg);
 }

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import HomePreview from '../pages/Preview/home-preview';
-import Overview from '../pages/Overview/overview';
-import Epub from '../components/slider/epub';
+import React, { useState, useEffect } from "react";
+import HomePreview from "../pages/Preview/home-preview";
+import Overview from "../pages/Overview/overview";
+import Epub from "../components/slider/epub";
+import { useHistory } from "react-router-dom";
 
 const Myc2ePreview = ({ walletConnection }) => {
-  console.log('preview init');
+  console.log("preview init");
   const [modalShow, setModalShow] = React.useState(false);
   const [activeC2E, setActiveC2e] = useState(false);
   const [projects, setProjects] = useState(null);
@@ -16,12 +17,18 @@ const Myc2ePreview = ({ walletConnection }) => {
   const [epbFile, setEpbFile] = useState(null);
   const [c2eResource, setC2eResource] = useState(null);
 
+  const history = useHistory();
+
+  console.log("====================================");
+  console.log(history?.location?.pathname);
+  console.log("====================================");
+
   useEffect(() => {
     if (JSlipParser) {
       const contents = [];
 
       JSlipParser.forEach((relativePath, zipEntry) => {
-        console.log(relativePath)
+        console.log(relativePath);
         contents.push(zipEntry.name);
       });
 
@@ -32,48 +39,54 @@ const Myc2ePreview = ({ walletConnection }) => {
   useEffect(() => {
     (async () => {
       if (allFiles) {
-        const c2edata = await returnContentFromUrl('c2e.json');
+        const c2edata = await returnContentFromUrl("c2e.json");
         setActiveC2e(c2edata);
-        const result = await returnContentFromUrl('content/contents.json');
+        const result = await returnContentFromUrl("content/contents.json");
 
         if (result) {
           // epub
           // need to check here waqar
           const AllEpub = result?.c2eContents.filter(
-            (data) => data.learningResourceType === 'EPUB'
+            (data) => data.learningResourceType === "EPUB",
           )?.[0];
           if (AllEpub) {
             const AllEpubData = await returnContentFromUrl(
-              AllEpub.url.charAt(0) === '/'
+              AllEpub.url.charAt(0) === "/"
                 ? AllEpub?.url.substr(1, AllEpub?.url.length - 1)
-                : AllEpub?.url
+                : AllEpub?.url,
             );
-            console.log(AllEpubData)
+            console.log(AllEpubData);
             const AllEpubData1 = await ExtractFromFile(
-              AllEpubData.file.charAt(0) === '/'
+              AllEpubData.file.charAt(0) === "/"
                 ? AllEpubData?.file.substr(1, AllEpubData?.file.length - 1)
-                : AllEpubData?.file
+                : AllEpubData?.file,
             );
-            
-            
-            const resoruces = c2edata?.c2eContainer?.filter(x => x['@id'] === 'c2ens:c2eResources');
-            const resoruce = Array.isArray(resoruces) && resoruces.length > 0 ? resoruces[0]?.c2eResources.find(r => r.url === '/'+AllEpubData1.unsafeOriginalName) : null;
+
+            const resoruces = c2edata?.c2eContainer?.filter(
+              (x) => x["@id"] === "c2ens:c2eResources",
+            );
+            const resoruce =
+              Array.isArray(resoruces) && resoruces.length > 0
+                ? resoruces[0]?.c2eResources.find(
+                    (r) => r.url === "/" + AllEpubData1.unsafeOriginalName,
+                  )
+                : null;
             setC2eResource(resoruce);
-            const epubData = await AllEpubData1.async('uint8array');
-            setEpbFile(epubData)
+            const epubData = await AllEpubData1.async("uint8array");
+            setEpbFile(epubData);
           }
 
           // projects
 
           const AllProjects = result?.c2eContents.filter(
-            (data) => data.learningResourceType === 'Project'
+            (data) => data.learningResourceType === "Project",
           );
           const allProjectData = [];
           for (let i = 0; i < AllProjects?.length; i++) {
             const AllProjectsData = await returnContentFromUrl(
-              AllProjects[i]?.url.charAt(0) === '/'
+              AllProjects[i]?.url.charAt(0) === "/"
                 ? AllProjects[i]?.url.substr(1, AllProjects[i]?.url.length - 1)
-                : AllProjects[i]?.url
+                : AllProjects[i]?.url,
             );
 
             allProjectData.push(AllProjectsData);
@@ -83,16 +96,16 @@ const Myc2ePreview = ({ walletConnection }) => {
 
           //playlist
           const AllPlaylist = result?.c2eContents.filter(
-            (data) => data.learningResourceType === 'Playlist'
+            (data) => data.learningResourceType === "Playlist",
           );
           const allPlaylistData = [];
           for (let i = 0; i < AllPlaylist?.length; i++) {
             const playlistData = AllPlaylist[i];
             playlistData.title = playlistData.url
-              .split('content/')[1]
-              .split('.json')[0]
+              .split("content/")[1]
+              .split(".json")[0]
               .replace(/-([a-z])/g, function (g) {
-                return ' ' + g[1].toUpperCase();
+                return " " + g[1].toUpperCase();
               });
 
             allPlaylistData.push(playlistData);
@@ -102,17 +115,17 @@ const Myc2ePreview = ({ walletConnection }) => {
 
           //activities
           const AllActivities = result?.c2eContents.filter(
-            (data) => data.learningResourceType === 'Activity'
+            (data) => data.learningResourceType === "Activity",
           );
           const allActivitiesData = [];
           for (let i = 0; i < AllActivities?.length; i++) {
             const activityData = await returnContentFromUrl(
-              AllActivities[i]?.url.charAt(0) === '/'
+              AllActivities[i]?.url.charAt(0) === "/"
                 ? AllActivities[i]?.url.substr(
                     1,
-                    AllActivities[i]?.url.length - 1
+                    AllActivities[i]?.url.length - 1,
                   )
-                : AllActivities[i]?.url
+                : AllActivities[i]?.url,
             );
 
             allActivitiesData.push(activityData);
@@ -132,7 +145,7 @@ const Myc2ePreview = ({ walletConnection }) => {
   const returnContentFromUrl = async (url) => {
     for (var i = 0; i < allFiles.length; i++) {
       if (allFiles[i].includes(url)) {
-        const contentRead = await JSlipParser.files[allFiles[i]].async('text');
+        const contentRead = await JSlipParser.files[allFiles[i]].async("text");
 
         const data = JSON.parse(contentRead);
 
@@ -146,7 +159,7 @@ const Myc2ePreview = ({ walletConnection }) => {
     for (var i = 0; i < allFiles.length; i++) {
       if (allFiles[i].includes(url)) {
         const data = await JSlipParser.files[allFiles[i]];
-        console.log(data)
+        console.log(data);
         return data;
       }
     }
@@ -165,7 +178,13 @@ const Myc2ePreview = ({ walletConnection }) => {
           />
         </div>
       ) : epbFile ? (
-        <Epub url={epbFile} setModalShow={setModalShow} activeC2E={activeC2E} setEpbFile={setEpbFile} c2eResource={c2eResource} />
+        <Epub
+          url={epbFile}
+          setModalShow={setModalShow}
+          activeC2E={activeC2E}
+          setEpbFile={setEpbFile}
+          c2eResource={c2eResource}
+        />
       ) : (
         <Overview
           projects={projects}

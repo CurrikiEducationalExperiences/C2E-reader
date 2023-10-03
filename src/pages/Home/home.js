@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Alert, Spinner, OverlayTrigger, Tooltip } from "react-bootstrap";
 import searchIcon from "../../assets/images/icons/search1.png";
-import addIcon from "../../assets/images/icons/add-icon.svg";
-import DeleteIcon from "../../assets/images/icons/delete-icon.svg";
-import defaultImage from "../../assets/images/C2E-Image-15.jpg";
+
 import JSZip from "jszip";
 import Slider from "../../components/slider";
 import { UserContext } from "../../App";
@@ -20,8 +18,6 @@ const Home = ({ setJSlipParser }) => {
   const [query, setQuery] = useState("");
   const apiBaseUrl = "https://c2e-provider-api.curriki.org/";
 
-  console.log("apiProject1", apiProject1);
-
   const listProjects = async () => {
     const allProjects = await fetch(apiBaseUrl + "c2e-licenses/buyer", {
       method: "POST",
@@ -32,7 +28,6 @@ const Home = ({ setJSlipParser }) => {
       },
     });
     const result = await allProjects.json();
-    console.log(result);
     setapiProject(result);
   };
 
@@ -128,7 +123,7 @@ const Home = ({ setJSlipParser }) => {
         if (a.cee.title > b.cee.title) return 1;
         return 0;
       });
-      console.log(apiProject);
+
       // Iterate through the sorted array and group chapters under their respective books
       setapiProject1(apiProject);
     }
