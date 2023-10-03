@@ -187,7 +187,7 @@ const Home = ({ setJSlipParser }) => {
 
         <br />
 
-        <C2eAccordion bookData={apiProject1} />
+        <C2eAccordion bookData={apiProject1} getC2E={getC2E} />
 
         <br />
         {/* <div className="c2e-cards">
@@ -204,7 +204,7 @@ const Home = ({ setJSlipParser }) => {
                     backgroundSize: "cover",
                   }}
                 >
-                
+
                   <div role="button" className="card-detail">
                     {data.cee?.description !== "No Description" &&
                       data.cee?.description && (
