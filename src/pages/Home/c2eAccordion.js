@@ -19,7 +19,13 @@ const C2eAccordion = ({ bookData, getC2E }) => {
               ?.map((data1) => {
                 return (
                   <div className="chapter-detail">
-                    <h1 onClick={()=>{getC2E(data1?.cee.id)}}>{data1.cee?.title}</h1>
+                    <h1
+                      onClick={() => {
+                        getC2E(data1?.cee.id);
+                      }}
+                    >
+                      {data1.cee?.title?.replace(/&#x2014;/g, "—")}
+                    </h1>
                     <p>{data1.cee?.description}</p>
                   </div>
                 );
