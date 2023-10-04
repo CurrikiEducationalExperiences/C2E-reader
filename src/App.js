@@ -8,13 +8,14 @@ import {
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import Myc2e from "./C2EComponents/myc2e";
+import MyEpub from "./C2EComponents/myEpub";
 import Myc2ePreview from "./C2EComponents/myc2e-preview";
-// import Home from './pages/Home/home';
-// import Overview from './pages/Overview/overview';
+
 import Login from "./pages/login";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./C2EComponents/header";
+
 export const UserContext = createContext(null);
 function App() {
   const OAuthClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -36,18 +37,18 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            {/* <Route path="/preview">
+            <Route path="/preview">
               <div className="header-container">
                 <Header />
               </div>
               <Myc2ePreview />
-            </Route> */}
+            </Route>
             <ProtectedRoute>
               <Route path="/book">
                 <div className="header-container">
                   <Header />
                 </div>
-                <Myc2ePreview />
+                <MyEpub />
               </Route>
 
               <Route exact path="/">

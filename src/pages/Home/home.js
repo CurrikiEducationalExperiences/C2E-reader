@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
-import { Alert, Spinner, OverlayTrigger, Tooltip } from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
+
 import searchIcon from "../../assets/images/icons/search1.png";
 
-import JSZip from "jszip";
 import Slider from "../../components/slider";
 import { UserContext } from "../../App";
 import C2eAccordion from "./c2eAccordion";
 
-const Home = ({ setJSlipParser }) => {
+const Home = () => {
   const user = useContext(UserContext);
-  const inp = useRef();
-  const [loader, setLoader] = useState();
-  const [error, setError] = useState();
+
   const [apiProject, setapiProject] = useState();
   const [apiProject1, setapiProject1] = useState();
 
   const [query, setQuery] = useState("");
+
+  const [searchData, setSearchData] = useState([]);
+
   const apiBaseUrl = "https://c2e-provider-api.curriki.org/";
 
   const listProjects = async () => {
@@ -27,92 +27,30 @@ const Home = ({ setJSlipParser }) => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
+
     const result = await allProjects.json();
+
     setapiProject(result);
-  };
 
-  const getC2E = (ceeId) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ceeId: ceeId,
-        token: localStorage.getItem("oAuthToken"),
-        decrypt: true,
-      }),
-    };
-    fetch(`${apiBaseUrl}c2e/licensed`, options).then((response) => {
-      response.arrayBuffer().then(async (data) => {
-        setLoader(false);
-        const blob = new Blob([data], {
-          type: "application/octet-stream",
-        });
-
-        const loadzip = await JSZip.loadAsync(blob);
-        loadzip.forEach(async (relativePath, zipEntry) => {
-          if (zipEntry.name.includes(".html")) {
-            setJSlipParser(loadzip);
-          } else if (zipEntry.name.includes(".c2e")) {
-            const loadzip1 = await JSZip.loadAsync(zipEntry.async("blob"));
-            setJSlipParser(loadzip1);
-          }
-        });
-      });
-    });
-  };
-
-  const getC2EDownload = (licenseKey) => {
-    fetch(`${apiBaseUrl}/c2e/licensed`, {
-      // Prepend the host
-      method: "POST",
-      body: JSON.stringify({ licenseKey: licenseKey }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.blob())
-      .then((blob) => {
-        // Create a temporary URL for the binary data
-        const url = window.URL.createObjectURL(blob); // Create a temporary <a> element to trigger the download
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = licenseKey + ".c2e"; // Change the filename as needed
-        a.style.display = "none";
-        document.body.appendChild(a);
-
-        // Trigger the download and cleanup
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("License activation failed.");
-      });
-  };
-
-  const deleteC2E = async (data) => {
-    const params = {
-      user: user.email,
-      c2eid: data.id,
-    };
-    fetch(apiBaseUrl + "api/v1/c2e/reader/deletec2e", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(params),
-    }).then((r) => {
-      if (r.status !== 200) setError("Error deleting, please try again.");
-
-      listProjects();
-    });
+    setapiProject(result);
+    setSearchData(result);
   };
 
   useEffect(() => {
     listProjects();
-  }, [query]);
+    if (query === "") {
+      setapiProject(apiProject1);
+    }
+  }, []);
 
+  const handleSearchClick = () => {
+    const filteredData = apiProject1?.filter((item) =>
+      item?.cee.title?.toLowerCase().includes(query.toLowerCase()),
+    );
+    setSearchData(filteredData);
+  };
+
+  //sort
   useEffect(() => {
     if (apiProject?.length) {
       apiProject?.sort((a, b) => {
@@ -129,11 +67,6 @@ const Home = ({ setJSlipParser }) => {
     }
   }, [apiProject]);
 
-  const tooltip = (
-    <Tooltip id="tooltip">
-      <strong>Holy guacamole!</strong> Check this info.
-    </Tooltip>
-  );
   return (
     <>
       <Slider />
@@ -163,74 +96,19 @@ const Home = ({ setJSlipParser }) => {
               onChange={(e) => setQuery(e.target.value)}
               value={query}
             />
-            <div className="search-icon">
+            <button onClick={handleSearchClick} className="search-icon">
               <img src={searchIcon} alt="search" />
-            </div>
+            </button>
           </div>
         </div>
 
         <h4 className="sub-heading">My C2E’s</h4>
-        {error && <Alert variant="danger">{error}</Alert>}
-        {loader && (
-          <div>
-            <Alert variant="warning">
-              <Spinner size="md" /> &nbsp; &nbsp; Validating and decrypting the
-              C2E file, please wait ....
-            </Alert>
-          </div>
-        )}
 
         <br />
 
-        <C2eAccordion bookData={apiProject1} getC2E={getC2E} />
+        <C2eAccordion bookData={searchData} />
 
         <br />
-        {/* <div className="c2e-cards">
-          {apiProject1?.map((data) => {
-            return (
-              <div className="c2e-main-card">
-                <div
-                  key={data.id}
-                  className="add-img-card "
-                  style={{
-                    backgroundImage: `url(${defaultImage})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                  }}
-                >
-
-                  <div role="button" className="card-detail">
-                    {data.cee?.description !== "No Description" &&
-                      data.cee?.description && (
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={
-                            <Tooltip id="tooltip">
-                              {data.cee?.description}
-                            </Tooltip>
-                          }
-                        >
-                          <div className="flexer">i</div>
-                        </OverlayTrigger>
-                      )}
-                  </div>
-                </div>
-                <div className="meta">
-                  <h3>{data.cee?.subjectOf}</h3>
-                  <p
-                    className="c2e-title"
-                    onClick={() => {
-                      getC2E(data?.cee.id);
-                    }}
-                  >
-                    {data.cee?.title}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div> */}
       </div>
     </>
   );

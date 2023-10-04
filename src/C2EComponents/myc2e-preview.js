@@ -17,12 +17,6 @@ const Myc2ePreview = ({ walletConnection }) => {
   const [epbFile, setEpbFile] = useState(null);
   const [c2eResource, setC2eResource] = useState(null);
 
-  const history = useHistory();
-
-  console.log("====================================");
-  console.log(history?.location?.pathname);
-  console.log("====================================");
-
   useEffect(() => {
     if (JSlipParser) {
       const contents = [];

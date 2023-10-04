@@ -327,6 +327,8 @@ body {
   border-radius: 12px;
   background: #2e68bf;
   cursor: pointer;
+  outline: none;
+  border: none;
 }
 .sub-heading {
   font-size: 18px;
@@ -985,7 +987,9 @@ body {
 .book-accordion .accordion-item .accordion-body .chapter-detail:last-child {
   border-bottom: none !important;
 }
-
+.book-accordion .accordion-item .accordion-body .chapter-detail a {
+  text-decoration: none;
+}
 .book-accordion .accordion-item .accordion-body .chapter-detail h1 {
   color: #084892;
   font-size: 18px;

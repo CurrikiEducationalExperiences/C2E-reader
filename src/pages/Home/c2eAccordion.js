@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
-
+import { Link } from "react-router-dom";
 import defaultImage from "../../assets/images/C2E-Image-15.jpg";
-import { useHistory } from "react-router-dom";
 
-const C2eAccordion = ({ bookData, getC2E }) => {
+const C2eAccordion = ({ bookData }) => {
   const [expand, setExpand] = useState(null);
-
-  const history = useHistory();
 
   const filterBook = new Set(bookData?.map((i) => i?.cee.subjectOf));
   return (
@@ -24,14 +21,13 @@ const C2eAccordion = ({ bookData, getC2E }) => {
               ?.map((data1, index) => {
                 return (
                   <div key={index} className="chapter-detail">
-                    <h1
-                      onClick={() => {
-                        getC2E(data1?.cee.id);
-                        // history.push("/book");
-                      }}
-                    >
-                      {data1.cee?.title}
-                    </h1>
+                    <Link to={`/book?id=${data1?.cee.id}`}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: `<h1>${data1.cee?.title}</h1>`,
+                        }}
+                      ></div>
+                    </Link>
                     <p>
                       {data1.cee?.description?.length > 170
                         ? expand === index
