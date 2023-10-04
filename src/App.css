@@ -285,7 +285,8 @@ body {
 .main-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 60px clamp(24px, 5vw, 120px);
+  /* padding: 60px clamp(24px, 5vw, 120px); */
+  padding: 60px 24px;
 }
 
 .heading h3 {
