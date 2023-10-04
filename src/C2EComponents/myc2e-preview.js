@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HomePreview from "../pages/Preview/home-preview";
 import Overview from "../pages/Overview/overview";
-import Epub from "../components/slider/epub";
+import Epub from "../components/slider/previewEpub";
 import { useHistory } from "react-router-dom";
 
 const Myc2ePreview = ({ walletConnection }) => {
