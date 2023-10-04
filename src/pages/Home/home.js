@@ -5,6 +5,7 @@ import searchIcon from "../../assets/images/icons/search1.png";
 import Slider from "../../components/slider";
 import { UserContext } from "../../App";
 import C2eAccordion from "./c2eAccordion";
+import { Alert } from "react-bootstrap";
 
 const Home = () => {
   const user = useContext(UserContext);
@@ -31,23 +32,34 @@ const Home = () => {
     const result = await allProjects.json();
 
     setapiProject(result);
-
-    setapiProject(result);
     setSearchData(result);
   };
 
   useEffect(() => {
     listProjects();
-    if (query === "") {
-      setapiProject(apiProject1);
-    }
   }, []);
 
+  useEffect(() => {
+    if (query === "") {
+      setSearchData(apiProject1);
+    }
+  }, [apiProject1, query]);
+
   const handleSearchClick = () => {
-    const filteredData = apiProject1?.filter((item) =>
-      item?.cee.title?.toLowerCase().includes(query.toLowerCase()),
-    );
+    const filteredData = apiProject1?.filter((item) => {
+      return (
+        item?.cee?.title?.toLowerCase().includes(query.toLowerCase()) ||
+        item?.cee?.subjectOf?.toLowerCase().includes(query.toLowerCase()) ||
+        item?.cee?.description?.toLowerCase().includes(query.toLowerCase())
+      );
+    });
     setSearchData(filteredData);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearchClick();
+    }
   };
 
   //sort
@@ -95,6 +107,7 @@ const Home = () => {
               placeholder="Search"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
+              onKeyPress={handleKeyPress}
             />
             <button onClick={handleSearchClick} className="search-icon">
               <img src={searchIcon} alt="search" />
@@ -106,8 +119,11 @@ const Home = () => {
 
         <br />
 
-        <C2eAccordion bookData={searchData} />
-
+        {searchData?.length <= 0 ? (
+          <Alert variant="warning">no result found.</Alert>
+        ) : (
+          <C2eAccordion bookData={searchData} />
+        )}
         <br />
       </div>
     </>
