@@ -127,7 +127,6 @@ const Epub = () => {
       const contents = [];
 
       JSlipParser.forEach((relativePath, zipEntry) => {
-        console.log(relativePath);
         contents.push(zipEntry.name);
       });
 
@@ -155,7 +154,7 @@ const Epub = () => {
                 ? AllEpub?.url.substr(1, AllEpub?.url.length - 1)
                 : AllEpub?.url
             );
-            console.log(AllEpubData);
+
             const AllEpubData1 = await ExtractFromFile(
               AllEpubData.file.charAt(0) === '/'
                 ? AllEpubData?.file.substr(1, AllEpubData?.file.length - 1)
@@ -197,7 +196,7 @@ const Epub = () => {
     for (var i = 0; i < allFiles.length; i++) {
       if (allFiles[i].includes(url)) {
         const data = await JSlipParser.files[allFiles[i]];
-        console.log(data);
+
         return data;
       }
     }
@@ -246,6 +245,8 @@ const Epub = () => {
               <ReactReader
                 epubOptions={{
                   allowScriptedContent: true, // Adds `allow-scripts` to sandbox-attribute
+                  flow: "scrolled",
+                  manager: "continuous",
                 }}
                 location={location}
                 locationChanged={locationChanged}
