@@ -305,6 +305,7 @@ body {
   gap: 8px;
   margin: 32px 0;
   width: 100%;
+  justify-content: flex-end;
 }
 .search-wrapper input {
   display: flex;
