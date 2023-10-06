@@ -81,7 +81,7 @@ const Home = () => {
 
   return (
     <>
-      <Slider />
+      {/* <Slider /> */}
       <br />
 
       <div className="main-container">
@@ -102,13 +102,7 @@ const Home = () => {
             </h3>
           </div>
           <div className="search-wrapper">
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={(e) => setQuery(e.target.value)}
-              value={query}
-              onKeyPress={handleKeyPress}
-            />
+            <input type="text" placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyPress={handleKeyPress} />
             <button onClick={handleSearchClick} className="search-icon">
               <img src={searchIcon} alt="search" />
             </button>
@@ -119,11 +113,7 @@ const Home = () => {
 
         <br />
 
-        {searchData?.length <= 0 ? (
-          <Alert variant="warning">no result found.</Alert>
-        ) : (
-          <C2eAccordion bookData={searchData} />
-        )}
+        {searchData?.length <= 0 ? <Alert variant="warning">no result found.</Alert> : <C2eAccordion bookData={searchData} />}
         <br />
       </div>
     </>
