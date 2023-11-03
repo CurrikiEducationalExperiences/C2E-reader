@@ -5,7 +5,7 @@ const HomePreview = ({
   setJSlipParser,
 }) => {
   const user = 'preview-c2e@curriki.org';
-  const apiBaseUrl = 'https://c2e-api.curriki.org/';
+  const apiBaseUrl = process.env.REACT_APP_API_URL;
 
   const loadPreviewC2E = async () => {
 
@@ -67,7 +67,7 @@ const HomePreview = ({
         })
         .catch((error) => {
           console.log(error);
-        });      
+        });
     });
 
   };

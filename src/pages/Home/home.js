@@ -17,7 +17,7 @@ const Home = () => {
 
   const [searchData, setSearchData] = useState([]);
 
-  const apiBaseUrl = "https://c2e-provider-api.curriki.org/";
+  const apiBaseUrl = process.env.REACT_APP_API_URL;
 
   const listProjects = async () => {
     const allProjects = await fetch(apiBaseUrl + "c2e-licenses/buyer", {
