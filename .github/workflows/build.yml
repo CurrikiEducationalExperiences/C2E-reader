@@ -25,6 +25,7 @@ env:
   EKS_CLUSTER_NAME: ${{secrets.EKS_CLUSTER_NAME}}
   COMMON_NAME: ${{secrets.COMMON_NAME}}
   ENV_JS: ${{secrets.ENV_JS}}
+  ENV_JS_DEV: ${{secrets.ENV_JS_DEV}}
   # MULTIPLE_TG: ${{secrets.MULTIPLE_TG}}
   # CERTIFICATE_ARN: ${{secrets.CERTIFICATE_ARN}}
 
@@ -36,7 +37,7 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@main
-    
+
     - name: Setup ECR
       run: |
         # Login to AWS ECR
@@ -45,7 +46,14 @@ jobs:
     - name: Build and tag the image
       run: |
         # Build and tag the image
-        echo "$ENV_JS" > .env
+
+        if [ ${{ github.ref }} = 'refs/heads/develop' ]; then
+          echo "$ENV_JS_DEV" > .env
+        elif [ ${{ github.ref }} = 'refs/heads/master' ]; then
+          echo "$ENV_JS" > .env
+        else
+          echo "No specific config."
+        fi
         docker build \
           -t $CONTAINER_IMAGE \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./
