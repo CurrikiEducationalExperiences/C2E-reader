@@ -55,6 +55,7 @@ jobs:
         else
           echo "No specific config."
         fi
+        cat .env
         docker build \
           -t $CONTAINER_IMAGE \
           -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CONTAINER_IMAGE ./
