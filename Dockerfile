@@ -20,7 +20,6 @@ COPY --from=build /app/build /usr/share/nginx/html
 # COPY --from=build /app/.env.example /usr/share/nginx/html/.env
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 
-
 WORKDIR /usr/share/nginx/html
 
 EXPOSE 80
